@@ -416,39 +416,3 @@
 </script>
 </body>
 </html>
-// 1. Data Label Butang Dwibahasa
-const levelButtons = [
-  { level: 1, count: 5, label: { ms: "Level 1 (5 Soalan)", en: "Level 1 (5 Questions)" } },
-  { level: 2, count: 10, label: { ms: "Level 2 (10 Soalan)", en: "Level 2 (10 Questions)" } },
-  { level: 3, count: 15, label: { ms: "Level 3 (15 Soalan)", en: "Level 3 (15 Questions)" } }
-];
-
-// 2. Fungsi Mengambil Soalan Tanpa Berulang
-function getUniqueQuestions(allQuestions, subjectId, questionCount, answeredIds) {
-  // Tapis mengikut subjek & soalan yang belum dijawab
-  const availableQuestions = allQuestions.filter(
-    q => q.subjectId === subjectId && !answeredIds.includes(q.id)
-  );
-
-  // Rawakkan soalan (Fisher-Yates Shuffle)
-  const shuffled = [...availableQuestions].sort(() => 0.5 - Math.random());
-
-  // Ambil mengikut bilangan level (5, 10, atau 15)
-  return shuffled.slice(0, questionCount);
-}
-
-// 3. Komponen Butang (Penerapan Dwibahasa)
-function SubjectLevelMenu({ subjectId, lang, onSelectLevel }) {
-  return (
-    <div className="level-container">
-      {levelButtons.map((btn) => (
-        <button 
-          key={btn.level} 
-          onClick={() => onSelectLevel(subjectId, btn.count)}
-        >
-          {btn.label[lang]}
-        </button>
-      ))}
-    </div>
-  );
-}
