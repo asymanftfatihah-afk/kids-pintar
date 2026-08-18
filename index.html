@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Kids Pintar - Bijak Edukids</title>
+  <title>Bijak Edukids</title>
   
+  <!-- Tailwind CSS & FontAwesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 
+  <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -29,6 +31,7 @@
 </head>
 <body class="bg-gradient-to-b from-sky-300 via-indigo-100 to-amber-100 min-h-screen text-slate-800 flex flex-col justify-between overflow-x-hidden">
 
+  <!-- TOP HEADER -->
   <header class="bg-white/90 backdrop-blur border-b-4 border-amber-400 p-3 shadow-lg sticky top-0 z-40">
     <div class="max-w-5xl mx-auto flex justify-between items-center">
       <div onclick="showTab('home')" class="flex items-center gap-2 cursor-pointer">
@@ -59,8 +62,10 @@
     </div>
   </header>
 
+  <!-- MAIN CONTAINER -->
   <main class="max-w-4xl mx-auto w-full p-4 flex-grow flex flex-col justify-center">
 
+    <!-- TAB 1: HOME -->
     <section id="tab-home" class="tab-content block space-y-6">
       <div class="bg-gradient-to-r from-amber-400 to-orange-400 rounded-3xl p-6 shadow-xl border-4 border-white text-white relative overflow-hidden flex flex-col sm:flex-row items-center gap-6">
         <div class="w-28 h-28 bg-white/20 rounded-full flex items-center justify-center text-6xl shadow-inner bouncy flex-shrink-0 border-2 border-white/50">
@@ -71,7 +76,7 @@
           <h2 class="text-2xl md:text-3xl font-bold mt-1" id="home-welcome">Hai, Kawan Bijak! 👋</h2>
           <p class="text-amber-100 text-base md:text-lg mt-1" id="biko-speech">Saya Biko! Jom belajar dan bermain bersama-sama hari ini!</p>
           <div class="mt-4 flex flex-wrap gap-2 justify-center sm:justify-start">
-            <button onclick="speakText(document.getElementById('biko-speech').innerText)" class="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur transition border border-white/30">
+            <button onclick="speakCurrentBiko()" class="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur transition border border-white/30">
               🔊 <span id="btn-listen-biko">Dengar Biko</span>
             </button>
           </div>
@@ -105,6 +110,7 @@
       </div>
     </section>
 
+    <!-- TAB 2: SUBJEK -->
     <section id="tab-subjects" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
@@ -158,6 +164,7 @@
       </div>
     </section>
 
+    <!-- MODAL LEVEL SELECTION -->
     <div id="level-select-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
       <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 border-4 border-indigo-400 shadow-2xl">
         <h3 class="text-2xl font-bold text-indigo-800" id="modal-level-title">Pilih Bilangan Soalan</h3>
@@ -181,6 +188,7 @@
       </div>
     </div>
 
+    <!-- TAB 3: GAMES HUB -->
     <section id="tab-games" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
@@ -202,6 +210,7 @@
       </div>
     </section>
 
+    <!-- TAB: PLAY SCREEN -->
     <section id="tab-play" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between bg-white/80 p-3 rounded-2xl shadow-sm border border-slate-200">
         <button onclick="showTab('subjects')" class="bg-red-400 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 shadow">
@@ -228,6 +237,7 @@
       </div>
     </section>
 
+    <!-- TAB: CREATIVITY -->
     <section id="tab-creativity" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
@@ -258,6 +268,7 @@
       </div>
     </section>
 
+    <!-- TAB: PARENTS -->
     <section id="tab-parents" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
@@ -293,6 +304,7 @@
 
   </main>
 
+  <!-- REWARD MODAL -->
   <div id="reward-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full text-center space-y-4 border-4 border-amber-400 shadow-2xl">
       <div class="text-6xl bouncy">🎉</div>
@@ -312,6 +324,7 @@
     </div>
   </div>
 
+  <!-- NAVIGATION BOTTOM BAR -->
   <nav class="bg-white/90 backdrop-blur border-t-2 border-indigo-100 p-2 sticky bottom-0 z-40">
     <div class="max-w-md mx-auto flex justify-around items-center">
       <button onclick="showTab('home')" class="flex flex-col items-center text-indigo-600">
@@ -333,6 +346,7 @@
     </div>
   </nav>
 
+  <!-- JAVASCRIPT ENGINE -->
   <script>
     let currentLang = 'bm';
     let state = { stars: 0, audioMuted: false };
@@ -477,6 +491,10 @@
         utterance.pitch = 1.0;
         window.speechSynthesis.speak(utterance);
       }
+    }
+
+    function speakCurrentBiko() {
+      speakText(document.getElementById('biko-speech').innerText);
     }
 
     function toggleAudio() {
