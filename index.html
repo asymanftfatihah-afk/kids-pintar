@@ -265,3 +265,560 @@
         </div>
       </div>
     </section>
+
+    <section id="tab-parents" class="tab-content hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+          <span>👨‍👩‍👧</span> Mod Ibu Bapa
+        </h2>
+        <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
+          ← Utama
+        </button>
+      </div>
+
+      <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-slate-300 space-y-6">
+        <div class="flex items-center justify-between border-b pb-4">
+          <div>
+            <h3 class="text-xl font-bold text-slate-800">Tetapan Bahasa Aplikasi</h3>
+            <p class="text-xs text-slate-500">Pilih bahasa rasmi untuk aplikasi.</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="setLanguage('bm')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-4 py-2 rounded-xl text-xs shadow">
+              Bahasa Melayu
+            </button>
+            <button onclick="setLanguage('en')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow">
+              English
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-2xl border text-center">
+          <span class="text-xs text-slate-500 font-bold">Jumlah Bintang Terkumpul</span>
+          <div class="text-2xl font-bold text-amber-500 mt-1"><span id="parent-stars">0</span> ⭐</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="reward-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full text-center space-y-4 border-4 border-amber-400 shadow-2xl">
+      <div class="text-6xl bouncy">🎉</div>
+      <h3 class="text-2xl font-bold text-amber-500" id="modal-reward-title">TAHNIAH, BIJAK!</h3>
+      <p class="text-slate-600 text-sm" id="modal-subtext">Jawapan anda tepat sekali!</p>
+      
+      <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 flex justify-around">
+        <div>
+          <div class="text-2xl font-bold text-amber-500">+10</div>
+          <div class="text-xs text-amber-700 font-bold">⭐ Bintang</div>
+        </div>
+      </div>
+
+      <button onclick="nextQuestionOrFinish()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-2xl shadow-lg active:scale-95 text-lg" id="btn-next">
+        SOALAN SETERUSNYA 🚀
+      </button>
+    </div>
+  </div>
+
+  <nav class="bg-white/90 backdrop-blur border-t-2 border-indigo-100 p-2 sticky bottom-0 z-40">
+    <div class="max-w-md mx-auto flex justify-around items-center">
+      <button onclick="showTab('home')" class="flex flex-col items-center text-indigo-600">
+        <span class="text-xl">🏠</span>
+        <span class="text-[10px] font-bold" id="nav-home">UTAMA</span>
+      </button>
+      <button onclick="showTab('subjects')" class="flex flex-col items-center text-indigo-600">
+        <span class="text-xl">📚</span>
+        <span class="text-[10px] font-bold" id="nav-subjects">SUBJEK</span>
+      </button>
+      <button onclick="showTab('games')" class="flex flex-col items-center text-indigo-600">
+        <span class="text-xl">🎮</span>
+        <span class="text-[10px] font-bold" id="nav-games">PERMAINAN</span>
+      </button>
+      <button onclick="showTab('creativity')" class="flex flex-col items-center text-indigo-600">
+        <span class="text-xl">🎨</span>
+        <span class="text-[10px] font-bold" id="nav-create">KREATIVITI</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    let currentLang = 'bm';
+    let state = { stars: 0, audioMuted: false };
+    let msVoice = null;
+
+    function loadVoices() {
+      if ('speechSynthesis' in window) {
+        const voices = window.speechSynthesis.getVoices();
+        msVoice = voices.find(v => v.lang === 'ms-MY' || v.lang === 'ms_MY') ||
+                  voices.find(v => v.lang.includes('ms') || v.lang.includes('id'));
+      }
+    }
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+      loadVoices();
+    }
+
+    const translations = {
+      bm: {
+        subtitle: "Belajar Seronok, Jadi Bijak!",
+        welcome: "Hai, Kawan Bijak! 👋",
+        bikoSpeech: "Saya Biko! Jom belajar dan bermain bersama-sama hari ini!",
+        listenBiko: "Dengar Biko",
+        menuStart: "MULA BELAJAR",
+        menuStartSub: "Pilih Subjek & Level",
+        menuGames: "PERMAINAN",
+        menuGamesSub: "Huruf & Nombor",
+        menuCreate: "KREATIVITI",
+        menuCreateSub: "Mewarna & Lukis",
+        menuParents: "IBU BAPA",
+        menuParentsSub: "Tetapan & Bahasa",
+        subjHeader: "Pilihan Subjek",
+        btnBackHome: "← Utama",
+        exit: "Keluar",
+        next: "SOALAN SETERUSNYA 🚀",
+        navHome: "UTAMA",
+        navSubjects: "SUBJEK",
+        navGames: "PERMAINAN",
+        navCreate: "KREATIVITI",
+        labelQ: "Soalan",
+        rewardTitle: "TAHNIAH, BIJAK!",
+        rewardSub: "Jawapan anda tepat sekali!",
+        modalTitle: "Pilih Bilangan Soalan",
+        modalDesc: "Berapa soalan yang ingin anda jawab?",
+        lvl5: "🌟 5 Soalan (Mudah)",
+        lvl10: "⭐ 10 Soalan (Sederhana)",
+        lvl20: "🏆 20 Soalan (Sukar)",
+        cancel: "Batal",
+        subjAnimTitle: "Haiwan & Bunyi",
+        subjAnimDesc: "Tekan & Cam Bunyi Haiwan!"
+      },
+      en: {
+        subtitle: "Learn & Have Fun!",
+        welcome: "Hello, Smart Friend! 👋",
+        bikoSpeech: "I'm Biko! Let's learn and play together today!",
+        listenBiko: "Listen to Biko",
+        menuStart: "START LEARNING",
+        menuStartSub: "Choose Subject & Level",
+        menuGames: "GAMES",
+        menuGamesSub: "Letters & Numbers",
+        menuCreate: "CREATIVITY",
+        menuCreateSub: "Coloring & Drawing",
+        menuParents: "PARENTS",
+        menuParentsSub: "Settings & Language",
+        subjHeader: "Choose Subject",
+        btnBackHome: "← Home",
+        exit: "Exit",
+        next: "NEXT QUESTION 🚀",
+        navHome: "HOME",
+        navSubjects: "SUBJECTS",
+        navGames: "GAMES",
+        navCreate: "CREATE",
+        labelQ: "Question",
+        rewardTitle: "GREAT JOB!",
+        rewardSub: "Your answer is correct!",
+        modalTitle: "Select Number of Questions",
+        modalDesc: "How many questions do you want to play?",
+        lvl5: "🌟 5 Questions (Easy)",
+        lvl10: "⭐ 10 Questions (Medium)",
+        lvl20: "🏆 20 Questions (Hard)",
+        cancel: "Cancel",
+        subjAnimTitle: "Animals & Sounds",
+        subjAnimDesc: "Tap & Listen Animal Sounds!"
+      }
+    };
+
+    function toggleLanguage() {
+      setLanguage(currentLang === 'bm' ? 'en' : 'bm');
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.getElementById('lang-btn-text').innerText = lang.toUpperCase();
+      const t = translations[lang];
+
+      document.getElementById('header-subtitle').innerText = t.subtitle;
+      document.getElementById('home-welcome').innerText = t.welcome;
+      document.getElementById('biko-speech').innerText = t.bikoSpeech;
+      document.getElementById('btn-listen-biko').innerText = t.listenBiko;
+
+      document.getElementById('menu-start').innerText = t.menuStart;
+      document.getElementById('menu-start-sub').innerText = t.menuStartSub;
+      document.getElementById('menu-games').innerText = t.menuGames;
+      document.getElementById('menu-games-sub').innerText = t.menuGamesSub;
+      document.getElementById('menu-create').innerText = t.menuCreate;
+      document.getElementById('menu-create-sub').innerText = t.menuCreateSub;
+      document.getElementById('menu-parents').innerText = t.menuParents;
+      document.getElementById('menu-parents-sub').innerText = t.menuParentsSub;
+
+      document.getElementById('subj-header').innerText = t.subjHeader;
+      document.getElementById('btn-back-home').innerText = t.btnBackHome;
+      document.getElementById('btn-exit').innerText = t.exit;
+      document.getElementById('btn-next').innerText = t.next;
+      document.getElementById('label-q').innerText = t.labelQ;
+
+      document.getElementById('nav-home').innerText = t.navHome;
+      document.getElementById('nav-subjects').innerText = t.navSubjects;
+      document.getElementById('nav-games').innerText = t.navGames;
+      document.getElementById('nav-create').innerText = t.navCreate;
+
+      document.getElementById('modal-reward-title').innerText = t.rewardTitle;
+      document.getElementById('modal-subtext').innerText = t.rewardSub;
+      document.getElementById('modal-level-title').innerText = t.modalTitle;
+      document.getElementById('modal-level-desc').innerText = t.modalDesc;
+      document.getElementById('lvl-5-btn').innerText = t.lvl5;
+      document.getElementById('lvl-10-btn').innerText = t.lvl10;
+      document.getElementById('lvl-20-btn').innerText = t.lvl20;
+      document.getElementById('lvl-cancel-btn').innerText = t.cancel;
+
+      document.getElementById('subj-anim-title').innerText = t.subjAnimTitle;
+      document.getElementById('subj-anim-desc').innerText = t.subjAnimDesc;
+    }
+
+    function speakText(text) {
+      if (state.audioMuted) return;
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+
+        if (currentLang === 'bm') {
+          utterance.lang = 'ms-MY';
+          if (msVoice) utterance.voice = msVoice;
+        } else {
+          utterance.lang = 'en-US';
+        }
+
+        utterance.rate = 0.85;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function toggleAudio() {
+      state.audioMuted = !state.audioMuted;
+      const btn = document.getElementById('btn-audio');
+      if (state.audioMuted) {
+        btn.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-400 text-white font-bold flex items-center justify-center shadow-md";
+        btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        window.speechSynthesis.cancel();
+      } else {
+        btn.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-emerald-400 text-white font-bold flex items-center justify-center shadow-md";
+        btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+        speakText(currentLang === 'bm' ? "Bunyi dihidupkan!" : "Sound activated!");
+      }
+    }
+
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+      const activeTab = document.getElementById(`tab-${tabId}`);
+      if (activeTab) activeTab.classList.remove('hidden');
+
+      if (tabId === 'home') speakText(translations[currentLang].welcome);
+      if (tabId === 'games') initMatchingGame();
+      if (tabId === 'creativity') initCanvas();
+    }
+
+    // BANK SOALAN (SEMUA JAWAPAN TERDIRI DARIPADA GAMBAR/EMOJI VISUAL)
+    const masterQuestions = {
+      bm: {
+        bm: [
+          { title: "Bahasa Melayu", instruction: "Manakah gambar bagi perkataan AYAM?", image: "🅰️", options: [{img:"🐓", text:"Ayam"}, {img:"🐱", text:"Kucing"}, {img:"🐟", text:"Ikan"}], answer: "🐓" },
+          { title: "Bahasa Melayu", instruction: "Manakah gambar bagi perkataan BUKU?", image: "🅱️", options: [{img:"📚", text:"Buku"}, {img:"🚗", text:"Kereta"}, {img:"🎈", text:"Belon"}], answer: "📚" },
+          { title: "Bahasa Melayu", instruction: "Manakah gambar bagi perkataan CICAK?", image: "🅲", options: [{img:"🦎", text:"Cicak"}, {img:"🐦", text:"Burung"}, {img:"🐸", text:"Katak"}], answer: "🦎" },
+          { title: "Bahasa Melayu", instruction: "Manakah gambar KERETA?", image: "🚗", options: [{img:"🚗", text:"Kereta"}, {img:"🚲", text:"Basikal"}, {img:"🚀", text:"Roket"}], answer: "🚗" },
+          { title: "Bahasa Melayu", instruction: "Manakah gambar BELON?", image: "🎈", options: [{img:"🎈", text:"Belon"}, {img:"⚽", text:"Bola"}, {img:"🎁", text:"Hadiah"}], answer: "🎈" },
+          { title: "Bahasa Melayu", instruction: "Manakah gambar IKAN?", image: "🇮", options: [{img:"🐟", text:"Ikan"}, {img:"🦆", text:"Itik"}, {img:"🐘", text:"Gajah"}], answer: "🐟" },
+          { title: "Bahasa Melayu", instruction: "Manakah gambar KUCING?", image: "🐱", options: [{img:"🐱", text:"Kucing"}, {img:"🐶", text:"Anjing"}, {img:"🐒", text:"Monyet"}], answer: "🐱" },
+          { title: "Bahasa Melayu", instruction: "Manakah gambar EPAL?", image: "🍎", options: [{img:"🍎", text:"Epal"}, {img:"🍌", text:"Pisang"}, {img:"🍇", text:"Anggur"}], answer: "🍎" }
+        ],
+        math: [
+          { title: "Matematik Awal", instruction: "Pilih kumpulan yang ada 3 biji epal!", image: "3️⃣", options: [{img:"🍎 🍎 🍎", text:"3 Epal"}, {img:"🍎 🍎", text:"2 Epal"}, {img:"🍎 🍎 🍎 🍎", text:"4 Epal"}], answer: "🍎 🍎 🍎" },
+          { title: "Matematik Awal", instruction: "Pilih kumpulan yang ada 4 ekor kucing!", image: "4️⃣", options: [{img:"🐱 🐱 🐱 🐱", text:"4 Kucing"}, {img:"🐱 🐱", text:"2 Kucing"}, {img:"🐱 🐱 🐱", text:"3 Kucing"}], answer: "🐱 🐱 🐱 🐱" },
+          { title: "Matematik Awal", instruction: "Pilih 2 buah kereta!", image: "2️⃣", options: [{img:"🚗 🚗", text:"2 Kereta"}, {img:"🚗", text:"1 Kereta"}, {img:"🚗 🚗 🚗", text:"3 Kereta"}], answer: "🚗 🚗" },
+          { title: "Matematik Awal", instruction: "Pilih 5 biji pisang!", image: "5️⃣", options: [{img:"🍌 🍌 🍌 🍌 🍌", text:"5 Pisang"}, {img:"🍌 🍌 🍌", text:"3 Pisang"}, {img:"🍌 🍌", text:"2 Pisang"}], answer: "🍌 🍌 🍌 🍌 🍌" },
+          { title: "Matematik Awal", instruction: "Pilih 1 ekor burung!", image: "1️⃣", options: [{img:"🐦", text:"1 Burung"}, {img:"🐦 🐦", text:"2 Burung"}, {img:"🐦 🐦 🐦", text:"3 Burung"}], answer: "🐦" }
+        ],
+        english: [
+          { title: "Bahasa Inggeris", instruction: "Which picture is a CAT?", image: "🐱", options: [{img:"🐱", text:"Cat"}, {img:"🐰", text:"Rabbit"}, {img:"🐦", text:"Bird"}], answer: "🐱" },
+          { title: "Bahasa Inggeris", instruction: "Which fruit is YELLOW?", image: "🍌", options: [{img:"🍌", text:"Banana"}, {img:"🍎", text:"Apple"}, {img:"🍇", text:"Grape"}], answer: "🍌" },
+          { title: "Bahasa Inggeris", instruction: "Which vehicle is an AIRPLANE?", image: "✈️", options: [{img:"✈️", text:"Airplane"}, {img:"🚗", text:"Car"}, {img:"🚢", text:"Ship"}], answer: "✈️" },
+          { title: "Bahasa Inggeris", instruction: "Which picture is an APPLE?", image: "🍎", options: [{img:"🍎", text:"Apple"}, {img:"🍊", text:"Orange"}, {img:"🍉", text:"Watermelon"}], answer: "🍎" },
+          { title: "Bahasa Inggeris", instruction: "Which animal is a DOG?", image: "🐶", options: [{img:"🐶", text:"Dog"}, {img:"🐱", text:"Cat"}, {img:"🦁", text:"Lion"}], answer: "🐶" }
+        ],
+        science: [
+          { title: "Sains Awal", instruction: "Manakah anggota badan untuk MELIHAT?", image: "👀", options: [{img:"👀", text:"Mata"}, {img:"👂", text:"Telinga"}, {img:"👄", text:"Mulut"}], answer: "👀" },
+          { title: "Sains Awal", instruction: "Manakah gambar ROKET?", image: "🚀", options: [{img:"🚀", text:"Roket"}, {img:"✈️", text:"Kapal Terbang"}, {img:"🚁", text:"Helikopter"}], answer: "🚀" },
+          { title: "Sains Awal", instruction: "Manakah cuaca HUJAN?", image: "🌧️", options: [{img:"🌧️", text:"Hujan"}, {img:"☀️", text:"Panas"}, {img:"❄️", text:"Salji"}], answer: "🌧️" },
+          { title: "Sains Awal", instruction: "Manakah anggota badan untuk MENDENGAR?", image: "👂", options: [{img:"👂", text:"Telinga"}, {img:"👃", text:"Hidung"}, {img:"🦶", text:"Kaki"}], answer: "👂" },
+          { title: "Sains Awal", instruction: "Manakah cuaca PANAS / CERAH?", image: "☀️", options: [{img:"☀️", text:"Panas"}, {img:"🌧️", text:"Hujan"}, {img:"🌩️", text:"Ribut"}], answer: "☀️" }
+        ],
+        islamic: [
+          { title: "Pendidikan Islam", instruction: "Manakah huruf Hijaiyyah ALIF?", image: "ا", options: [{img:"ا", text:"Alif"}, {img:"ب", text:"Ba"}, {img:"ت", text:"Ta"}], answer: "ا" },
+          { title: "Pendidikan Islam", instruction: "Manakah huruf Hijaiyyah BA?", image: "ب", options: [{img:"ب", text:"Ba"}, {img:"ا", text:"Alif"}, {img:"ج", text:"Jim"}], answer: "ب" },
+          { title: "Pendidikan Islam", instruction: "Manakah perbuatan BERSALAMAN?", image: "🤝", options: [{img:"🤝", text:"Salam"}, {img:"🏃", text:"Lari"}, {img:"😴", text:"Tidur"}], answer: "🤝" },
+          { title: "Pendidikan Islam", instruction: "Manakah gambar MAKANAN halal?", image: "🍽️", options: [{img:"🍎", text:"Buah"}, {img:"🥛", text:"Susu"}, {img:"🍞", text:"Roti"}], answer: "🍎" },
+          { title: "Pendidikan Islam", instruction: "Manakah tempat beribadat MASJID?", image: "🕌", options: [{img:"🕌", text:"Masjid"}, {img:"🏠", text:"Rumah"}, {img:"🏫", text:"Sekolah"}], answer: "🕌" }
+        ],
+        animals: [
+          { title: "Haiwan & Bunyi", instruction: "Manakah gambar HARIMAU? Tekan butang audio untuk dengar!", soundText: "Roar! Manakah harimau?", image: "🔊 🐯", options: [{img:"🐯", text:"Harimau"}, {img:"🐱", text:"Kucing"}, {img:"🐶", text:"Anjing"}], answer: "🐯" },
+          { title: "Haiwan & Bunyi", instruction: "Manakah gambar LEMBU? (Mooo!)", soundText: "Mooo! Di manakah lembu?", image: "🔊 🐮", options: [{img:"🐮", text:"Lembu"}, {img:"🐴", text:"Kuda"}, {img:"🐐", text:"Kambing"}], answer: "🐮" },
+          { title: "Haiwan & Bunyi", instruction: "Manakah gambar ITIK? (Kwak kwak!)", soundText: "Kwak kwak! Cari gambar itik!", image: "🔊 🦆", options: [{img:"🦆", text:"Itik"}, {img:"🐓", text:"Ayam"}, {img:"🐦", text:"Burung"}], answer: "🦆" },
+          { title: "Haiwan & Bunyi", instruction: "Manakah gambar MONYET?", soundText: "Uuk uuk ak ak! Manakah monyet?", image: "🔊 🐒", options: [{img:"🐒", text:"Monyet"}, {img:"🐘", text:"Gajah"}, {img:"🦁", text:"Singa"}], answer: "🐒" },
+          { title: "Haiwan & Bunyi", instruction: "Manakah gambar GAJAH?", soundText: "Prett! Cari gajah bertaring!", image: "🔊 🐘", options: [{img:"🐘", text:"Gajah"}, {img:"🦒", text:"Zirafah"}, {img:"🦏", text:"Badak"}], answer: "🐘" },
+          { title: "Haiwan & Bunyi", instruction: "Manakah gambar KATAK?", soundText: "Ong ong! Manakah katak hijau?", image: "🔊 🐸", options: [{img:"🐸", text:"Katak"}, {img:"🦎", text:"Cicak"}, {img:"🐍", text:"Ular"}], answer: "🐸" }
+        ]
+      },
+      en: {
+        bm: [
+          { title: "Malay Language", instruction: "Which picture represents HEN?", image: "🅰️", options: [{img:"🐓", text:"Hen"}, {img:"🐱", text:"Cat"}, {img:"🐟", text:"Fish"}], answer: "🐓" },
+          { title: "Malay Language", instruction: "Which picture represents BOOK?", image: "🅱️", options: [{img:"📚", text:"Book"}, {img:"🚗", text:"Car"}, {img:"🎈", text:"Balloon"}], answer: "📚" },
+          { title: "Malay Language", instruction: "Which picture represents LIZARD?", image: "🅲", options: [{img:"🦎", text:"Lizard"}, {img:"🐦", text:"Bird"}, {img:"🐸", text:"Frog"}], answer: "🦎" }
+        ],
+        math: [
+          { title: "Early Math", instruction: "Select the group with 3 apples!", image: "3️⃣", options: [{img:"🍎 🍎 🍎", text:"3 Apples"}, {img:"🍎 🍎", text:"2 Apples"}, {img:"🍎 🍎 🍎 🍎", text:"4 Apples"}], answer: "🍎 🍎 🍎" },
+          { title: "Early Math", instruction: "Select the group with 4 cats!", image: "4️⃣", options: [{img:"🐱 🐱 🐱 🐱", text:"4 Cats"}, {img:"🐱 🐱", text:"2 Cats"}, {img:"🐱 🐱 🐱", text:"3 Cats"}], answer: "🐱 🐱 🐱 🐱" },
+          { title: "Early Math", instruction: "Select 2 cars!", image: "2️⃣", options: [{img:"🚗 🚗", text:"2 Cars"}, {img:"🚗", text:"1 Car"}, {img:"🚗 🚗 🚗", text:"3 Cars"}], answer: "🚗 🚗" }
+        ],
+        english: [
+          { title: "English Language", instruction: "Which picture is a CAT?", image: "🐱", options: [{img:"🐱", text:"Cat"}, {img:"🐰", text:"Rabbit"}, {img:"🐦", text:"Bird"}], answer: "🐱" },
+          { title: "English Language", instruction: "Which fruit is YELLOW?", image: "🍌", options: [{img:"🍌", text:"Banana"}, {img:"🍎", text:"Apple"}, {img:"🍇", text:"Grape"}], answer: "🍌" },
+          { title: "English Language", instruction: "Which vehicle is an AIRPLANE?", image: "✈️", options: [{img:"✈️", text:"Airplane"}, {img:"🚗", text:"Car"}, {img:"🚢", text:"Ship"}], answer: "✈️" }
+        ],
+        science: [
+          { title: "Early Science", instruction: "Which body part is used for SEEING?", image: "👀", options: [{img:"👀", text:"Eyes"}, {img:"👂", text:"Ears"}, {img:"👄", text:"Mouth"}], answer: "👀" },
+          { title: "Early Science", instruction: "Which picture is a ROCKET?", image: "🚀", options: [{img:"🚀", text:"Rocket"}, {img:"✈️", text:"Airplane"}, {img:"🚁", text:"Helicopter"}], answer: "🚀" },
+          { title: "Early Science", instruction: "Which weather is RAINY?", image: "🌧️", options: [{img:"🌧️", text:"Rainy"}, {img:"☀️", text:"Sunny"}, {img:"❄️", text:"Snowy"}], answer: "🌧️" }
+        ],
+        islamic: [
+          { title: "Islamic Education", instruction: "Which Hijaiyyah letter is ALIF?", image: "ا", options: [{img:"ا", text:"Alif"}, {img:"ب", text:"Ba"}, {img:"ت", text:"Ta"}], answer: "ا" },
+          { title: "Islamic Education", instruction: "Which Hijaiyyah letter is BA?", image: "ب", options: [{img:"ب", text:"Ba"}, {img:"ا", text:"Alif"}, {img:"ج", text:"Jim"}], answer: "ب" }
+        ],
+        animals: [
+          { title: "Animals & Sounds", instruction: "Where is the TIGER?", soundText: "Roar! Which one is the tiger?", image: "🔊 🐯", options: [{img:"🐯", text:"Tiger"}, {img:"🐱", text:"Cat"}, {img:"🐶", text:"Dog"}], answer: "🐯" },
+          { title: "Animals & Sounds", instruction: "Where is the COW?", soundText: "Mooo! Which one is the cow?", image: "🔊 🐮", options: [{img:"🐮", text:"Cow"}, {img:"🐴", text:"Horse"}, {img:"🐐", text:"Goat"}], answer: "🐮" },
+          { title: "Animals & Sounds", instruction: "Where is the DUCK?", soundText: "Quack quack! Find the duck!", image: "🔊 🦆", options: [{img:"🦆", text:"Duck"}, {img:"🐓", text:"Hen"}, {img:"🐦", text:"Bird"}], answer: "🦆" },
+          { title: "Animals & Sounds", instruction: "Where is the MONKEY?", soundText: "Which one is the monkey?", image: "🔊 🐒", options: [{img:"🐒", text:"Monkey"}, {img:"🐘", text:"Elephant"}, {img:"🦁", text:"Lion"}], answer: "🐒" }
+        ]
+      }
+    };
+
+    let selectedSubject = 'bm';
+    let questionPool = [];
+    let currentQuestionIndex = 0;
+    let totalQuestionsCount = 5;
+
+    function openLevelModal(subjKey) {
+      selectedSubject = subjKey;
+      document.getElementById('level-select-modal').classList.remove('hidden');
+    }
+
+    function closeLevelModal() {
+      document.getElementById('level-select-modal').classList.add('hidden');
+    }
+
+    // FUNGSI SHUFFLE UNTUK PASTIKAN SOALAN RAWAK DAN TIADA ULANGAN
+    function shuffleArray(array) {
+      let arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function startSubjectGame(questionCount) {
+      closeLevelModal();
+      totalQuestionsCount = questionCount;
+      currentQuestionIndex = 0;
+
+      const langGroup = masterQuestions[currentLang] || masterQuestions.bm;
+      const baseList = langGroup[selectedSubject] || langGroup.bm;
+      
+      // Shuffle senarai soalan utama
+      let shuffled = shuffleArray(baseList);
+      
+      // Salin soalan mengikut bilangan tanpa soalan berturutan berulang
+      questionPool = [];
+      while (questionPool.length < totalQuestionsCount) {
+        questionPool = questionPool.concat(shuffled);
+      }
+      questionPool = questionPool.slice(0, totalQuestionsCount);
+
+      showTab('play');
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = questionPool[currentQuestionIndex];
+      document.getElementById('q-current').innerText = currentQuestionIndex + 1;
+      document.getElementById('q-total').innerText = totalQuestionsCount;
+
+      document.getElementById('game-title-display').innerText = q.title;
+      document.getElementById('game-biko-instruction').innerText = q.instruction;
+      document.getElementById('game-feedback-area').innerHTML = '';
+
+      // Sebut arahan atau audio bunyi haiwan
+      const textToSpeak = q.soundText || q.instruction;
+      speakText(textToSpeak);
+
+      // Shuffle susunan pilihan jawapan gambar
+      const shuffledOptions = shuffleArray(q.options);
+
+      const contentBox = document.getElementById('game-dynamic-content');
+      contentBox.innerHTML = `
+        <div class="text-6xl md:text-7xl my-3 bouncy border-4 border-amber-300 bg-amber-50 rounded-3xl p-4 shadow-inner">
+          ${q.image}
+        </div>
+        <div class="grid grid-cols-3 gap-3 w-full max-w-lg mt-4">
+          ${shuffledOptions.map(opt => `
+            <button onclick="checkAnswer(this, '${opt.img.replace(/'/g, "\\'")}', '${q.answer.replace(/'/g, "\\'")}')" class="bg-gradient-to-b from-white to-slate-100 hover:from-amber-100 hover:to-amber-200 border-4 border-indigo-200 hover:border-amber-400 p-4 rounded-3xl shadow-md active:scale-95 transition flex flex-col items-center justify-center gap-2">
+              <span class="text-4xl sm:text-5xl">${opt.img}</span>
+              <span class="text-xs sm:text-sm font-bold text-slate-700">${opt.text}</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function checkAnswer(btnElement, selected, correct) {
+      if (selected === correct) {
+        document.getElementById('game-feedback-area').innerHTML = `<span class="text-emerald-600 font-bold">🎉 Syabas, Jawapan Betul!</span>`;
+        speakText(currentLang === 'bm' ? "Bagus sekali! Jawapan kamu tepat!" : "Great job! That is correct!");
+
+        confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
+        state.stars += 10;
+        document.getElementById('stat-stars').innerText = state.stars;
+        document.getElementById('parent-stars').innerText = state.stars;
+
+        setTimeout(() => {
+          document.getElementById('reward-modal').classList.remove('hidden');
+        }, 600);
+      } else {
+        document.getElementById('game-feedback-area').innerHTML = `<span class="text-amber-600 font-bold">Cuba lagi!</span>`;
+        speakText(currentLang === 'bm' ? "Cuba lagi!" : "Try again!");
+      }
+    }
+
+    function nextQuestionOrFinish() {
+      document.getElementById('reward-modal').classList.add('hidden');
+      currentQuestionIndex++;
+      if (currentQuestionIndex < totalQuestionsCount) {
+        loadQuestion();
+      } else {
+        speakText(currentLang === 'bm' ? "Tahniah! Anda telah selesai menjawab semua soalan!" : "Congratulations! You completed all questions!");
+        showTab('subjects');
+      }
+    }
+
+    function repeatInstruction() {
+      const q = questionPool[currentQuestionIndex];
+      if (q) {
+        const textToSpeak = q.soundText || q.instruction;
+        speakText(textToSpeak);
+      }
+    }
+
+    function openParentsAuth() {
+      const num1 = Math.floor(Math.random() * 4) + 1;
+      const num2 = Math.floor(Math.random() * 4) + 1;
+      const ans = prompt(`KAWALAN IBU BAPA / PARENTAL CONTROL:\n${num1} + ${num2} = ?`);
+      if (parseInt(ans) === (num1 + num2)) {
+        showTab('parents');
+      }
+    }
+
+    // MATCHING CARD GAME
+    const cardData = ['A', 'A', '1', '1', 'B', 'B', '2', '2', 'C', 'C', '3', '3'];
+    let flippedCards = [];
+    let matchedPairs = 0;
+
+    function initMatchingGame() {
+      const board = document.getElementById('matching-board');
+      board.innerHTML = '';
+      flippedCards = [];
+      matchedPairs = 0;
+
+      const shuffled = shuffleArray(cardData);
+      shuffled.forEach((val, idx) => {
+        const card = document.createElement('div');
+        card.className = "h-20 bg-amber-400 rounded-2xl flex items-center justify-center text-3xl font-bold text-indigo-900 cursor-pointer shadow-lg border-b-4 border-amber-600 active:scale-95 transition";
+        card.dataset.value = val;
+        card.dataset.index = idx;
+        card.innerText = '❓';
+        card.onclick = () => flipCard(card);
+        board.appendChild(card);
+      });
+    }
+
+    function flipCard(card) {
+      if (flippedCards.length < 2 && card.innerText === '❓') {
+        card.innerText = card.dataset.value;
+        card.classList.remove('bg-amber-400');
+        card.classList.add('bg-white');
+        flippedCards.push(card);
+
+        if (flippedCards.length === 2) {
+          setTimeout(checkMatch, 600);
+        }
+      }
+    }
+
+    function checkMatch() {
+      const [c1, c2] = flippedCards;
+      if (c1.dataset.value === c2.dataset.value) {
+        c1.classList.add('bg-emerald-200', 'border-emerald-500');
+        c2.classList.add('bg-emerald-200', 'border-emerald-500');
+        matchedPairs++;
+        speakText(c1.dataset.value);
+
+        if (matchedPairs === cardData.length / 2) {
+          confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+          speakText(currentLang === 'bm' ? "Syabas! Anda berjaya padankan semua!" : "Awesome! You matched all cards!");
+        }
+      } else {
+        c1.innerText = '❓';
+        c2.innerText = '❓';
+        c1.classList.remove('bg-white');
+        c2.classList.remove('bg-white');
+        c1.classList.add('bg-amber-400');
+        c2.classList.add('bg-amber-400');
+      }
+      flippedCards = [];
+    }
+
+    // CANVAS DRAWING ENGINE
+    let canvas, ctx, isDrawing = false, strokeColor = '#EF4444';
+    function initCanvas() {
+      canvas = document.getElementById('paintCanvas');
+      if (!canvas) return;
+      ctx = canvas.getContext('2d');
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      ctx.lineWidth = 6;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = strokeColor;
+
+      canvas.onmousedown = (e) => startDraw(e.offsetX, e.offsetY);
+      canvas.onmousemove = (e) => draw(e.offsetX, e.offsetY);
+      canvas.onmouseup = () => stopDraw();
+
+      canvas.ontouchstart = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        startDraw(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+      };
+      canvas.ontouchmove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        draw(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+      };
+      canvas.ontouchend = () => stopDraw();
+    }
+    function setPaintColor(c) { strokeColor = c; if(ctx) ctx.strokeStyle = c; }
+    function startDraw(x, y) { isDrawing = true; ctx.beginPath(); ctx.moveTo(x, y); }
+    function draw(x, y) { if (!isDrawing) return; ctx.lineTo(x, y); ctx.stroke(); }
+    function stopDraw() { isDrawing = false; }
+    function clearCanvas() { if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+    window.onload = () => { setLanguage('bm'); };
+  </script>
+</body>
+</html>
