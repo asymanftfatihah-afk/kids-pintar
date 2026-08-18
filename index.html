@@ -130,21 +130,19 @@
       </div>
     </section>
 
-    <!-- TAB 2: SUBJEK (DIBAIKI BUTANG KEMBALI) -->
+    <!-- TAB 2: SUBJEK -->
     <section id="tab-subjects" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
           <span>📚</span> Pilihan Subjek
         </h2>
-        <!-- FIX 1: BUTANG KEMBALI KE HOME -->
         <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
           ← Kembali Utama
         </button>
       </div>
 
-      <!-- FIX 2: SUBJEK DENGAN ITEM KANDUNGAN YANG BETUL -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- BM -->
+        <!-- Bahasa Melayu -->
         <div onclick="startSubjectTopic('bm')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-red-200 hover:border-red-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🔴</div>
           <div>
@@ -153,7 +151,7 @@
           </div>
         </div>
 
-        <!-- Matematik -->
+        <!-- Matematik Awal -->
         <div onclick="startSubjectTopic('math')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-blue-200 hover:border-blue-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🔢</div>
           <div>
@@ -162,7 +160,7 @@
           </div>
         </div>
 
-        <!-- English -->
+        <!-- Bahasa Inggeris -->
         <div onclick="startSubjectTopic('english')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-amber-200 hover:border-amber-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🔤</div>
           <div>
@@ -258,7 +256,7 @@
         </div>
 
         <div id="game-dynamic-content" class="my-6 flex flex-col items-center justify-center flex-grow">
-          <!-- Dynamic Content -->
+          <!-- Dynamic Content Injected via JS -->
         </div>
 
         <div id="game-feedback-area" class="h-10 text-center font-bold text-xl flex items-center justify-center">
@@ -518,7 +516,6 @@
       }
     }
 
-    // UTAMA FUNCTION SHOW TAB (MEMBAIKI NAVIGASI)
     function showTab(tabId) {
       const tabs = document.querySelectorAll('.tab-content');
       tabs.forEach(tab => tab.classList.add('hidden'));
@@ -538,22 +535,24 @@
       }
     }
 
-    // BANK SOALAN MENGIKUT SUBJEK YANG BETUL
+    // BANK SOALAN ASLI MENGIKUT SUBJEK
     const subjectQuestions = {
       bm: [
         { title: "Bahasa Melayu", instruction: "Cari huruf awal bagi gambar AYAM!", image: "🐓", options: ["A", "B", "C"], answer: "A" },
-        { title: "Bahasa Melayu", instruction: "Cari huruf awal bagi gambar BUKU!", image: "📚", options: ["K", "B", "D"], answer: "B" }
+        { title: "Bahasa Melayu", instruction: "Cari huruf awal bagi gambar BUKU!", image: "📚", options: ["K", "B", "D"], answer: "B" },
+        { title: "Bahasa Melayu", instruction: "Cari huruf awal bagi gambar CICAK!", image: "🦎", options: ["S", "M", "C"], answer: "C" }
       ],
       math: [
         { title: "Matematik Awal", instruction: "Berapa biji epal di bawah?", image: "🍎 🍎 🍎 🍎 🍎", options: ["3", "5", "7"], answer: "5" },
-        { title: "Matematik Awal", instruction: "Kira berapa ekor kucing ini!", image: "🐱 🐱 🐱", options: ["2", "3", "4"], answer: "3" }
+        { title: "Matematik Awal", instruction: "Kira berapa ekor kucing ini!", image: "🐱 🐱 🐱", options: ["2", "3", "4"], answer: "3" },
+        { title: "Matematik Awal", instruction: "Berapakah hasil 2 + 1 = ?", image: "➕", options: ["3", "5", "1"], answer: "3" }
       ],
       english: [
         { title: "Bahasa Inggeris", instruction: "What animal is this?", image: "🐶", options: ["Cat", "Dog", "Bird"], answer: "Dog" },
         { title: "Bahasa Inggeris", instruction: "What colour is this banana?", image: "🍌", options: ["Yellow", "Red", "Blue"], answer: "Yellow" }
       ],
       science: [
-        { title: "Sains Awal", instruction: "Manakah objek hidup?", image: "🌱 🆚 🪨", options: ["Tumbuhan", "Batu", "Kerusi"], answer: "Tumbuhan" },
+        { title: "Sains Awal", instruction: "Manakah merupakan pokok/tumbuhan?", image: "🌳 🆚 🪨", options: ["Pokok", "Batu", "Kerusi"], answer: "Pokok" },
         { title: "Sains Awal", instruction: "Apakah cuaca di dalam gambar ini?", image: "🌧️", options: ["Hujan", "Panas", "Angin"], answer: "Hujan" }
       ],
       islamic: [
@@ -563,9 +562,12 @@
     };
 
     let currentQuestion = null;
+    let currentSubjectKey = 'bm';
 
     function startSubjectTopic(subjKey) {
+      currentSubjectKey = subjKey;
       showTab('play');
+      
       const qList = subjectQuestions[subjKey] || subjectQuestions.bm;
       currentQuestion = qList[Math.floor(Math.random() * qList.length)];
 
@@ -608,7 +610,8 @@
 
     function closeRewardModal() {
       document.getElementById('reward-modal').classList.add('hidden');
-      showTab('subjects');
+      // Terus berikan soalan seterusnya bagi subjek yang sama
+      startSubjectTopic(currentSubjectKey);
     }
 
     function repeatInstruction() {
@@ -616,7 +619,9 @@
     }
 
     function startDailyChallenge() {
-      startSubjectTopic('math');
+      const keys = ['bm', 'math', 'english', 'science', 'islamic'];
+      const randomKey = keys[Math.floor(Math.random() * keys.length)];
+      startSubjectTopic(randomKey);
     }
 
     function openParentsAuth() {
