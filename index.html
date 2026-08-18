@@ -1,461 +1,686 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Aplikasi Belajar Kanak-Kanak</title>
-  <style>
-    :root {
-      --bg-pink: #ffeef4;
-      --card-border: #ffd1dc;
-      --text-color: #ff3366;
-      --primary-btn: #ff477e;
-      --star-color: #ffca28;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bijak Edukids - Belajar Seronok, Jadi Bijak!</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-    * {
-      box-sizing: border-box;
-      user-select: none;
-      -webkit-user-select: none;
-      margin: 0;
-      padding: 0;
-      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Fredoka', cursive, sans-serif;
-    }
-
-    body {
-      background: linear-gradient(180deg, #ffd6e7 0%, #fff0f5 50%, #e8f5e9 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Standard Mobile Frame */
-    .app-container {
-      width: 100%;
-      max-width: 414px;
-      height: 100vh;
-      max-height: 896px;
-      background: linear-gradient(180deg, #fff2f7 0%, #ffe3ed 100%);
-      border-radius: 24px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Top Bar */
-    .top-bar {
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .icon-btn {
-      width: 40px;
-      height: 40px;
-      background: white;
-      border: 2px solid var(--card-border);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
-      cursor: pointer;
-      color: var(--text-color);
-      box-shadow: 0 3px 0 var(--card-border);
-    }
-
-    .star-badge {
-      background: white;
-      border: 2px solid #ffe082;
-      border-radius: 20px;
-      padding: 5px 15px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: bold;
-      color: #f57f17;
-      box-shadow: 0 3px 0 #ffe082;
-    }
-
-    /* Views */
-    .view {
-      display: none;
-      flex: 1;
-      flex-direction: column;
-      padding: 15px 20px;
-      overflow-y: auto;
-    }
-
-    .view.active {
-      display: flex;
-    }
-
-    /* Menu Grid */
-    .menu-title {
-      text-align: center;
-      color: var(--text-color);
-      font-size: 26px;
-      margin: 10px 0 20px;
-      text-shadow: 1px 1px 0px white;
-    }
-
-    .topics-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
-
-    .topic-card {
-      background: white;
-      border: 3px dashed var(--card-border);
-      border-radius: 20px;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.1s;
-      box-shadow: 0 5px 0 var(--card-border);
-    }
-
-    .topic-card:active {
-      transform: scale(0.95);
-    }
-
-    .topic-icon {
-      font-size: 50px;
-      margin-bottom: 8px;
-    }
-
-    .topic-label {
-      background: #f8f9fa;
-      border: 1px solid #eee;
-      border-radius: 12px;
-      padding: 4px 12px;
-      font-size: 14px;
-      font-weight: bold;
-      color: #444;
-      text-align: center;
-      width: 100%;
-    }
-
-    /* Game / Quiz View */
-    .question-box {
-      background: white;
-      border: 3px dashed var(--card-border);
-      border-radius: 24px;
-      padding: 20px 15px;
-      text-align: center;
-      position: relative;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 0 var(--card-border);
-    }
-
-    .question-text {
-      color: var(--text-color);
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .audio-btn {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 36px;
-      height: 36px;
-      background: #f0f0f0;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .options-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      flex: 1;
-    }
-
-    .option-card {
-      background: white;
-      border: 3px dashed var(--card-border);
-      border-radius: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 50px;
-      cursor: pointer;
-      transition: transform 0.1s;
-      box-shadow: 0 5px 0 var(--card-border);
-      min-height: 120px;
-    }
-
-    .option-card:active {
-      transform: scale(0.95);
-    }
-
-    /* Sub-menu / Mode Selection View */
-    .sub-menu-card {
-      background: white;
-      border: 3px dashed var(--card-border);
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
-    .main-button {
-      background: linear-gradient(180deg, #ff6b8b 0%, #ff3366 100%);
-      color: white;
-      border: none;
-      border-radius: 25px;
-      padding: 12px 30px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 4px 0 #c41e4a;
-      width: 80%;
-      margin-top: 10px;
-    }
-
-    .main-button:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 0 #c41e4a;
-    }
-
-    /* Color Swatch Helper */
-    .color-block {
-      width: 70px;
-      height: 70px;
-      border-radius: 16px;
-      box-shadow: 0 3px 0 rgba(0,0,0,0.1);
-    }
-  </style>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #F0F9FF;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+        .font-kids {
+            font-family: 'Fredoka One', cursive;
+        }
+        .btn-bounce {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-bounce:active {
+            transform: scale(0.92);
+        }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .pulse-slow {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+    </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden text-gray-800">
 
-<div class="app-container">
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div class="icon-btn" onclick="showView('menu')">✕</div>
-    <div class="star-badge">
-      ⭐ <span id="star-count">0</span>
-    </div>
-  </div>
+    <!-- HEADER / TOP NAV -->
+    <header class="bg-amber-400 p-4 shadow-lg border-b-4 border-amber-500 sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <!-- Brand -->
+            <div onclick="showPage('page-home')" class="cursor-pointer flex items-center space-x-2">
+                <span class="text-3xl">🐼</span>
+                <div>
+                    <h1 class="font-kids text-2xl text-amber-900 leading-none">BIJAK EDUKIDS</h1>
+                    <p class="text-xs font-bold text-amber-800">Belajar Seronok, Jadi Bijak!</p>
+                </div>
+            </div>
 
-  <!-- MENU VIEW -->
-  <div id="view-menu" class="view active">
-    <h2 class="menu-title">Pilih Topik 🎈</h2>
-    <div class="topics-grid">
-      <div class="topic-card" onclick="openTopic('warna')">
-        <div class="topic-icon">🎨</div>
-        <div class="topic-label">Warna</div>
-      </div>
-      <div class="topic-card" onclick="openTopic('haiwan')">
-        <div class="topic-icon">🐶</div>
-        <div class="topic-label">Haiwan</div>
-      </div>
-      <div class="topic-card" onclick="openTopic('buah')">
-        <div class="topic-icon">🍎</div>
-        <div class="topic-label">Buah-buahan</div>
-      </div>
-      <div class="topic-card" onclick="openTopic('nombor')">
-        <div class="topic-icon">🔢</div>
-        <div class="topic-label">Nombor</div>
-      </div>
-      <div class="topic-card" onclick="openTopic('bentuk')">
-        <div class="topic-icon">🔺</div>
-        <div class="topic-label">Bentuk</div>
-      </div>
-      <div class="topic-card" onclick="openTopic('abc')">
-        <div class="topic-icon">🔤</div>
-        <div class="topic-label">Mengenal ABC</div>
-      </div>
-    </div>
-  </div>
+            <!-- Stats Bar -->
+            <div class="flex items-center space-x-3 bg-white/80 backdrop-blur px-3 py-1.5 rounded-full border-2 border-amber-300 shadow-inner">
+                <div class="flex items-center space-x-1">
+                    <span class="text-xl">⭐</span>
+                    <span id="stat-stars" class="font-kids text-amber-600 text-lg">0</span>
+                </div>
+                <div class="h-4 w-0.5 bg-amber-300"></div>
+                <div class="flex items-center space-x-1">
+                    <span class="text-xl">🏆</span>
+                    <span id="stat-badges" class="font-kids text-purple-600 text-lg">0</span>
+                </div>
+                <div class="h-4 w-0.5 bg-amber-300"></div>
+                <button onclick="toggleAudio()" id="btn-audio" class="text-lg text-gray-700 hover:text-amber-600">
+                    🔊
+                </button>
+            </div>
+        </div>
+    </header>
 
-  <!-- SUB-MENU MODE VIEW -->
-  <div id="view-submenu" class="view">
-    <h2 id="submenu-title" class="menu-title">Topik</h2>
-    
-    <div class="sub-menu-card">
-      <h3 style="color:#ff3366; margin-bottom: 8px;">📖 Belajar</h3>
-      <p style="color:#666; font-size:14px; margin-bottom:12px;">Tekan gambar, dengar sebutan!</p>
-      <button class="main-button" onclick="startMode('learn')">BELAJAR! 🚀</button>
+    <!-- PANDA MASCOT OVERLAY HEADER -->
+    <div class="max-w-4xl mx-auto w-full px-4 pt-3">
+        <div class="bg-white rounded-2xl p-3 border-2 border-amber-200 shadow-md flex items-center space-x-3 bg-gradient-to-r from-amber-50 to-orange-50">
+            <div class="text-4xl floating">🐼</div>
+            <div class="flex-1">
+                <p class="text-xs font-bold text-amber-600 uppercase tracking-wide">Biko berkata:</p>
+                <p id="panda-dialog" class="text-sm font-bold text-gray-700 leading-tight">Selamat datang kawan-kawan! Jom kita belajar sambil bermain!</p>
+            </div>
+            <button onclick="speakCurrentPanda()" class="p-2 bg-amber-200 hover:bg-amber-300 rounded-full text-amber-800 btn-bounce">
+                📢
+            </button>
+        </div>
     </div>
 
-    <div class="sub-menu-card">
-      <h3 style="color:#28a745; margin-bottom: 8px;">🎯 Kuiz</h3>
-      <p style="color:#666; font-size:14px; margin-bottom:12px;">Uji apa yang kamu tahu!</p>
-      <button class="main-button" style="background: linear-gradient(180deg, #2ed573 0%, #26af5f 100%); box-shadow: 0 4px 0 #1e8447;" onclick="startMode('quiz')">MAIN KUIZ! 🎮</button>
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-4xl mx-auto w-full px-4 py-4 flex-1">
+
+        <!-- 1. HALAMAN UTAMA (HOME) -->
+        <section id="page-home" class="space-y-6">
+            <!-- Banner Dashboard Kids -->
+            <div class="bg-gradient-to-br from-cyan-400 to-blue-500 rounded-3xl p-6 text-white shadow-xl border-4 border-cyan-300 relative overflow-hidden">
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="bg-yellow-300 text-yellow-900 font-kids px-3 py-1 rounded-full text-xs uppercase">Selamat Datang!</span>
+                        <h2 class="font-kids text-3xl md:text-4xl mt-2 drop-shadow-md">KIDS PINTAR</h2>
+                        <p class="font-semibold text-cyan-100 text-sm md:text-base mt-1">Level Semasa: <span id="home-level" class="font-kids text-yellow-300">Level 1 (Pemula)</span></p>
+                    </div>
+                    <button onclick="startQuickGame()" class="bg-yellow-400 hover:bg-yellow-300 text-yellow-950 font-kids text-xl px-8 py-4 rounded-2xl shadow-lg border-b-4 border-yellow-600 btn-bounce pulse-slow flex items-center space-x-2">
+                        <span>▶️</span>
+                        <span>MULA BELAJAR</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Navigation Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <button onclick="showPage('page-subjects')" class="bg-rose-400 hover:bg-rose-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-rose-600 flex flex-col items-center btn-bounce">
+                    <span class="text-5xl mb-2">📚</span>
+                    <span class="font-kids text-xl">SUBJEK</span>
+                </button>
+                <button onclick="startQuickGame()" class="bg-emerald-400 hover:bg-emerald-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-emerald-600 flex flex-col items-center btn-bounce">
+                    <span class="text-5xl mb-2">🎮</span>
+                    <span class="font-kids text-xl">PERMAINAN</span>
+                </button>
+                <button onclick="showPage('page-creativity')" class="bg-purple-400 hover:bg-purple-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-purple-600 flex flex-col items-center btn-bounce">
+                    <span class="text-5xl mb-2">🎨</span>
+                    <span class="font-kids text-xl">KREATIVITI</span>
+                </button>
+                <button onclick="showPage('page-achievements')" class="bg-amber-400 hover:bg-amber-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-amber-600 flex flex-col items-center btn-bounce">
+                    <span class="text-5xl mb-2">🏆</span>
+                    <span class="font-kids text-xl">PENCAPAIAN</span>
+                </button>
+                <button onclick="showParentGate()" class="bg-indigo-400 hover:bg-indigo-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-indigo-600 flex flex-col items-center btn-bounce col-span-2 md:col-span-2">
+                    <span class="text-5xl mb-2">👨‍👩‍👧</span>
+                    <span class="font-kids text-xl">MOD IBU BAPA</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. HALAMAN SUBJEK (SUBJECTS) -->
+        <section id="page-subjects" class="hidden space-y-4">
+            <h2 class="font-kids text-2xl text-center text-amber-900">PILIH SUBJEK PEMBELAJARAN</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div onclick="startSubjectGame('bm')" class="bg-sky-100 border-4 border-sky-400 p-4 rounded-2xl flex items-center space-x-4 cursor-pointer hover:bg-sky-200 btn-bounce">
+                    <div class="text-5xl">🔤</div>
+                    <div>
+                        <h3 class="font-kids text-xl text-sky-900">Bahasa Melayu</h3>
+                        <p class="text-xs text-sky-700">Huruf A-Z, Vokal & Perkataan Mudah</p>
+                    </div>
+                </div>
+                <div onclick="startSubjectGame('math')" class="bg-emerald-100 border-4 border-emerald-400 p-4 rounded-2xl flex items-center space-x-4 cursor-pointer hover:bg-emerald-200 btn-bounce">
+                    <div class="text-5xl">🔢</div>
+                    <div>
+                        <h3 class="font-kids text-xl text-emerald-900">Matematik Awal</h3>
+                        <p class="text-xs text-emerald-700">Nombor 1-20, Kira Objek & Bentuk</p>
+                    </div>
+                </div>
+                <div onclick="startSubjectGame('colors')" class="bg-pink-100 border-4 border-pink-400 p-4 rounded-2xl flex items-center space-x-4 cursor-pointer hover:bg-pink-200 btn-bounce">
+                    <div class="text-5xl">🎨</div>
+                    <div>
+                        <h3 class="font-kids text-xl text-pink-900">Warna & Haiwan</h3>
+                        <p class="text-xs text-pink-700">Kenal Warna, Haiwan & Buah-buahan</p>
+                    </div>
+                </div>
+                <div onclick="startSubjectGame('science')" class="bg-amber-100 border-4 border-amber-400 p-4 rounded-2xl flex items-center space-x-4 cursor-pointer hover:bg-amber-200 btn-bounce">
+                    <div class="text-5xl">🌱</div>
+                    <div>
+                        <h3 class="font-kids text-xl text-amber-900">Sains Awal</h3>
+                        <p class="text-xs text-amber-700">Anggota Badan, Cuaca & Tumbuhan</p>
+                    </div>
+                </div>
+                <div onclick="startSubjectGame('islamic')" class="bg-purple-100 border-4 border-purple-400 p-4 rounded-2xl flex items-center space-x-4 cursor-pointer hover:bg-purple-200 btn-bounce col-span-1 md:col-span-2">
+                    <div class="text-5xl">🌙</div>
+                    <div>
+                        <h3 class="font-kids text-xl text-purple-900">Pendidikan Islam & Nilai Murni</h3>
+                        <p class="text-xs text-purple-700">Hijaiyyah, Adab Harian & Amalan Baik</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="showPage('page-home')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-kids py-3 rounded-2xl btn-bounce">⬅️ KEMBALI KE MENU UTAMA</button>
+        </section>
+
+        <!-- 3. HALAMAN GAME/QUIZ (GAME PLAY AREA) -->
+        <section id="page-game" class="hidden space-y-4">
+            <div class="bg-white rounded-3xl p-6 shadow-xl border-4 border-amber-300 text-center relative">
+                <!-- Question Badge -->
+                <span id="game-category-tag" class="bg-amber-100 text-amber-800 font-bold px-4 py-1 rounded-full text-xs inline-block mb-3">Subjek</span>
+                
+                <!-- Question Text -->
+                <h3 id="game-question" class="font-kids text-2xl text-gray-800 mb-6">Soalan Permainan?</h3>
+
+                <!-- Main Display / Visual Target -->
+                <div id="game-target" class="my-4 flex justify-center items-center min-h-[120px]">
+                    <!-- Dynamic Target Content -->
+                </div>
+
+                <!-- Answer Choices Grid -->
+                <div id="game-options" class="grid grid-cols-2 gap-4 mt-6">
+                    <!-- Dynamic Option Buttons -->
+                </div>
+            </div>
+            <button onclick="showPage('page-home')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-kids py-3 rounded-2xl btn-bounce">⬅️ KELUAR PERMAINAN</button>
+        </section>
+
+        <!-- 4. HALAMAN KREATIVITI (MEWARNA/MELUKIS) -->
+        <section id="page-creativity" class="hidden space-y-4">
+            <h2 class="font-kids text-2xl text-center text-purple-900">STUDIO KREATIVITI</h2>
+            <div class="bg-white p-4 rounded-3xl shadow-xl border-4 border-purple-300 flex flex-col items-center space-y-3">
+                <canvas id="paintCanvas" width="320" height="320" class="border-4 border-dashed border-purple-300 rounded-2xl touch-none bg-white cursor-crosshair"></canvas>
+                
+                <!-- Color Palette -->
+                <div class="flex space-x-2">
+                    <button onclick="setCanvasColor('#EF4444')" class="w-10 h-10 rounded-full bg-red-500 border-2 border-white shadow-md btn-bounce"></button>
+                    <button onclick="setCanvasColor('#3B82F6')" class="w-10 h-10 rounded-full bg-blue-500 border-2 border-white shadow-md btn-bounce"></button>
+                    <button onclick="setCanvasColor('#10B981')" class="w-10 h-10 rounded-full bg-emerald-500 border-2 border-white shadow-md btn-bounce"></button>
+                    <button onclick="setCanvasColor('#F59E0B')" class="w-10 h-10 rounded-full bg-amber-500 border-2 border-white shadow-md btn-bounce"></button>
+                    <button onclick="setCanvasColor('#8B5CF6')" class="w-10 h-10 rounded-full bg-purple-500 border-2 border-white shadow-md btn-bounce"></button>
+                    <button onclick="setCanvasColor('#FFFFFF')" class="w-10 h-10 rounded-full bg-white border-2 border-gray-400 shadow-md flex items-center justify-center text-xs btn-bounce">🧹</button>
+                </div>
+                <button onclick="clearCanvas()" class="bg-rose-400 text-white font-kids px-6 py-2 rounded-xl text-sm btn-bounce">PADAM SEMUA</button>
+            </div>
+            <button onclick="showPage('page-home')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-kids py-3 rounded-2xl btn-bounce">⬅️ KEMBALI KE MENU UTAMA</button>
+        </section>
+
+        <!-- 5. HALAMAN PENCAPAIAN (ACHIEVEMENTS) -->
+        <section id="page-achievements" class="hidden space-y-4">
+            <h2 class="font-kids text-2xl text-center text-amber-900">GALERI PENCAPAIAN</h2>
+            <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-amber-300 space-y-4">
+                <div class="flex items-center space-x-4 bg-amber-50 p-4 rounded-2xl border border-amber-200">
+                    <span class="text-4xl">👑</span>
+                    <div>
+                        <h4 class="font-kids text-lg text-amber-900">Jumlah Bintang terkumpul</h4>
+                        <p id="badge-star-count" class="text-2xl font-kids text-amber-600">0 ⭐</p>
+                    </div>
+                </div>
+                
+                <h3 class="font-kids text-xl text-gray-700 pt-2">Lencana Terkunci / Dibuka:</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div id="badge-1" class="bg-gray-100 p-3 rounded-2xl text-center border-2 border-gray-200 opacity-50">
+                        <span class="text-3xl">🌟</span>
+                        <p class="font-bold text-xs mt-1">Pembelajar Bijak</p>
+                        <p class="text-[10px] text-gray-500">Kumpul 10 Bintang</p>
+                    </div>
+                    <div id="badge-2" class="bg-gray-100 p-3 rounded-2xl text-center border-2 border-gray-200 opacity-50">
+                        <span class="text-3xl">🔤</span>
+                        <p class="font-bold text-xs mt-1">Jagoan ABC</p>
+                        <p class="text-[10px] text-gray-500">Selesaikan Subjek BM</p>
+                    </div>
+                    <div id="badge-3" class="bg-gray-100 p-3 rounded-2xl text-center border-2 border-gray-200 opacity-50">
+                        <span class="text-3xl">🧮</span>
+                        <p class="font-bold text-xs mt-1">Pakar Nombor</p>
+                        <p class="text-[10px] text-gray-500">Selesaikan Matematik</p>
+                    </div>
+                    <div id="badge-4" class="bg-gray-100 p-3 rounded-2xl text-center border-2 border-gray-200 opacity-50">
+                        <span class="text-3xl">🎨</span>
+                        <p class="font-bold text-xs mt-1">Artis Cilik</p>
+                        <p class="text-[10px] text-gray-500">Cuba Studio Kreativiti</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="showPage('page-home')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-kids py-3 rounded-2xl btn-bounce">⬅️ KEMBALI KE MENU UTAMA</button>
+        </section>
+
+        <!-- 6. HALAMAN IBU BAPA (PARENT DASHBOARD) -->
+        <section id="page-parents" class="hidden space-y-4">
+            <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-indigo-300 space-y-4">
+                <div class="flex justify-between items-center border-b pb-3">
+                    <h2 class="font-kids text-2xl text-indigo-900">👨‍👩‍👧 DASHBOARD IBU BAPA</h2>
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full font-bold">Privasi Terjaga</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-center">
+                    <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100">
+                        <p class="text-xs text-gray-500 font-bold">Masa Belajar</p>
+                        <p id="parent-time" class="font-kids text-xl text-indigo-600">~5 Minit</p>
+                    </div>
+                    <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100">
+                        <p class="text-xs text-gray-500 font-bold">Soalan Dijawab</p>
+                        <p id="parent-answered" class="font-kids text-xl text-indigo-600">0</p>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-bold text-sm text-gray-700">Analisis Kemajuan Subjek:</h4>
+                    <div class="space-y-1 text-xs">
+                        <div class="flex justify-between"><span>Bahasa Melayu</span><span class="font-bold text-emerald-600">Baik</span></div>
+                        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full w-3/4"></div></div>
+                        <div class="flex justify-between pt-2"><span>Matematik Awal</span><span class="font-bold text-amber-600">Sederhana</span></div>
+                        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden"><div class="bg-amber-500 h-full w-1/2"></div></div>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 p-3 rounded-xl border border-yellow-200 text-xs text-yellow-800">
+                    💡 <strong>Cadangan Biko:</strong> Galakkan anak untuk membunyikan huruf vokal bersama-sama bagi mengukuhkan penguasaan Bahasa Melayu.
+                </div>
+            </div>
+            <button onclick="showPage('page-home')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-kids py-3 rounded-2xl btn-bounce">⬅️ KEMBALI KE MENU UTAMA</button>
+        </section>
+
+    </main>
+
+    <!-- FOOTER SAFETY INFO -->
+    <footer class="bg-amber-100 py-3 text-center text-xs text-amber-800 border-t border-amber-200 mt-auto">
+        <p>🔒 100% Selamat untuk Kanak-Kanak • Tiada Iklan Luar • Bijak Edukids 2026</p>
+    </footer>
+
+    <!-- MODAL GANJARAN (VICTORY MODAL) -->
+    <div id="modal-victory" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 text-center max-w-sm w-full border-4 border-yellow-400 shadow-2xl space-y-4 floating">
+            <div class="text-6xl">🎉</div>
+            <h2 class="font-kids text-3xl text-amber-600">TAHNIAH!</h2>
+            <p class="font-bold text-gray-700 text-lg">Jawapan Kamu Betul!</p>
+            <div class="bg-yellow-100 p-3 rounded-2xl inline-block">
+                <span class="text-2xl">⭐ +10 Bintang</span>
+            </div>
+            <p id="victory-panda-text" class="text-sm font-semibold text-amber-800">"Syabas! Kamu semakin bijak!"</p>
+            <button onclick="closeVictoryModal()" class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-950 font-kids text-xl py-3 rounded-2xl shadow-md border-b-4 border-yellow-600 btn-bounce">
+                TERUSKAN 🚀
+            </button>
+        </div>
     </div>
-  </div>
 
-  <!-- QUIZ / GAME VIEW -->
-  <div id="view-quiz" class="view">
-    <div class="question-box">
-      <div id="question-text" class="question-text">Pilih soalan</div>
-      <div class="audio-btn" onclick="speakCurrentQuestion()">🔊</div>
-    </div>
-    <div id="options-container" class="options-grid">
-      <!-- Dynamic Options -->
-    </div>
-  </div>
-</div>
+    <!-- JAVASCRIPT LOGIC & FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.app.js";
 
-<script>
-  // Database Kandungan Khas Kanak-kanak 2-3 Tahun
-  const DATA = {
-    warna: [
-      { name: 'merah', type: 'color', value: '#ff3b30' },
-      { name: 'biru', type: 'color', value: '#007aff' },
-      { name: 'kuning', type: 'color', value: '#ffcc00' },
-      { name: 'hijau', type: 'color', value: '#34c759' }
-    ],
-    haiwan: [
-      { name: 'kucing', type: 'emoji', value: '🐱' },
-      { name: 'anjing', type: 'emoji', value: '🐶' },
-      { name: 'lembu', type: 'emoji', value: '🐮' },
-      { name: 'itik', type: 'emoji', value: '🦆' }
-    ],
-    buah: [
-      { name: 'epal', type: 'emoji', value: '🍎' },
-      { name: 'pisang', type: 'emoji', value: '🍌' },
-      { name: 'anggur', type: 'emoji', value: '🍇' },
-      { name: 'oren', type: 'emoji', value: '🍊' }
-    ],
-    nombor: [
-      { name: 'satu', type: 'text', value: '1' },
-      { name: 'dua', type: 'text', value: '2' },
-      { name: 'tiga', type: 'text', value: '3' },
-      { name: 'empat', type: 'text', value: '4' }
-    ],
-    bentuk: [
-      { name: 'bulat', type: 'emoji', value: '⚪' },
-      { name: 'segi tiga', type: 'emoji', value: '🔺' },
-      { name: 'segi empat', type: 'emoji', value: '⬛' },
-      { name: 'bintang', type: 'emoji', value: '⭐' }
-    ],
-    abc: [
-      { name: 'A', type: 'text', value: 'A' },
-      { name: 'B', type: 'text', value: 'B' },
-      { name: 'C', type: 'text', value: 'C' },
-      { name: 'D', type: 'text', value: 'D' }
-    ]
-  };
-
-  let currentTopic = '';
-  let currentMode = '';
-  let currentQuestionIndex = 0;
-  let currentCorrectItem = null;
-  let stars = 0;
-
-  function showView(viewId) {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById('view-' + viewId).classList.add('active');
-  }
-
-  function openTopic(topicKey) {
-    currentTopic = topicKey;
-    const topicNames = {
-      warna: 'Warna', haiwan: 'Haiwan', buah: 'Buah-buahan',
-      nombor: 'Nombor', bentuk: 'Bentuk', abc: 'ABC'
-    };
-    document.getElementById('submenu-title').innerText = 'Jom Belajar ' + topicNames[topicKey];
-    showView('submenu');
-  }
-
-  function startMode(mode) {
-    currentMode = mode;
-    showView('quiz');
-    loadQuestion();
-  }
-
-  function loadQuestion() {
-    const list = DATA[currentTopic];
-    const container = document.getElementById('options-container');
-    container.innerHTML = '';
-
-    if (currentMode === 'quiz') {
-      // Pilih 1 jawapan betul secara rawak
-      const correctIndex = Math.floor(Math.random() * list.length);
-      currentCorrectItem = list[correctIndex];
-
-      document.getElementById('question-text').innerText = `Yang manakah ${currentCorrectItem.name}?`;
-      speakText(`Yang manakah ${currentCorrectItem.name}?`);
-
-      // Susun pilihan secara rawak
-      const shuffled = [...list].sort(() => Math.random() - 0.5);
-
-      shuffled.forEach(item => {
-        const card = createCard(item);
-        card.onclick = () => checkAnswer(item);
-        container.appendChild(card);
-      });
-    } else {
-      // Mode Belajar
-      document.getElementById('question-text').innerText = 'Tekan untuk dengar!';
-      list.forEach(item => {
-        const card = createCard(item);
-        card.onclick = () => {
-          speakText(item.name);
+        const firebaseConfig = {
+            apiKey: "AIzaSyDczzfjllLDnwtHeZ4KC8ue22piSJkIrLM",
+            authDomain: "kids-pintar.firebaseapp.com",
+            databaseURL: "https://kids-pintar-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "kids-pintar",
+            storageBucket: "kids-pintar.firebasestorage.app",
+            messagingSenderId: "124238780825",
+            appId: "1:124238780825:web:96d639637c6fe044b29b08",
+            measurementId: "G-RJ75DSLH94"
         };
-        container.appendChild(card);
-      });
-    }
-  }
 
-  function createCard(item) {
-    const card = document.createElement('div');
-    card.className = 'option-card';
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-    if (item.type === 'color') {
-      const colorBox = document.createElement('div');
-      colorBox.className = 'color-block';
-      colorBox.style.backgroundColor = item.value;
-      card.appendChild(colorBox);
-    } else {
-      card.innerText = item.value;
-    }
-    return card;
-  }
+        // App State
+        let gameState = {
+            stars: 0,
+            badges: 0,
+            level: 1,
+            answeredCount: 0,
+            audioEnabled: true
+        };
 
-  function checkAnswer(selectedItem) {
-    if (selectedItem.name === currentCorrectItem.name) {
-      stars += 1;
-      document.getElementById('star-count').innerText = stars;
-      speakText('Pandai!');
-      setTimeout(() => {
-        loadQuestion();
-      }, 1000);
-    } else {
-      speakText('Cuba lagi!');
-    }
-  }
+        // Load saved state from LocalStorage
+        if (localStorage.getItem('bijak_edukids_state')) {
+            gameState = JSON.parse(localStorage.getItem('bijak_edukids_state'));
+            updateUI();
+        }
 
-  function speakCurrentQuestion() {
-    const text = document.getElementById('question-text').innerText;
-    speakText(text);
-  }
+        function saveState() {
+            localStorage.setItem('bijak_edukids_state', JSON.stringify(gameState));
+            updateUI();
+            // Optional sync to Firebase
+            try {
+                set(ref(db, 'users/guest_child'), gameState);
+            } catch (e) {
+                console.log("Firebase sync skipped offline");
+            }
+        }
 
-  function speakText(text) {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'ms-MY';
-      utterance.rate = 0.8; // Sebutan perlahan untuk kanak-kanak
-      window.speechSynthesis.speak(utterance);
-    }
-  }
-</script>
+        window.saveState = saveState;
+        window.gameState = gameState;
+    </script>
+
+    <script>
+        // Database Soalan Permainan
+        const questions = [
+            // Bahasa Melayu
+            {
+                type: 'bm',
+                category: 'Bahasa Melayu',
+                question: 'Yang manakah huruf "A" untuk Ayam?',
+                targetHtml: '<div class="text-7xl font-kids text-rose-500 animate-bounce">🐔</div>',
+                options: [
+                    { text: 'Ayam', isCorrect: true, emoji: '🐓' },
+                    { text: 'Beruang', isCorrect: false, emoji: '🐻' },
+                    { text: 'Cicak', isCorrect: false, emoji: '🦎' },
+                    { text: 'Singa', isCorrect: false, emoji: '🦁' }
+                ],
+                speech: "Yang manakah huruf A untuk Ayam?"
+            },
+            // Matematik
+            {
+                type: 'math',
+                category: 'Matematik Awal',
+                question: 'Kira berapa biji epal di bawah?',
+                targetHtml: '<div class="text-4xl flex space-x-2">🍎🍎🍎🍎🍎</div>',
+                options: [
+                    { text: '3', isCorrect: false },
+                    { text: '5', isCorrect: true },
+                    { text: '7', isCorrect: false },
+                    { text: '2', isCorrect: false }
+                ],
+                speech: "Kira berapa biji epal di bawah?"
+            },
+            // Warna
+            {
+                type: 'colors',
+                category: 'Kenal Warna',
+                question: 'Manakah warna MERAH?',
+                targetHtml: '<div class="w-20 h-20 bg-red-500 rounded-2xl shadow-md border-4 border-white"></div>',
+                options: [
+                    { text: 'Merah', isCorrect: true, colorBg: 'bg-red-500' },
+                    { text: 'Biru', isCorrect: false, colorBg: 'bg-blue-500' },
+                    { text: 'Hijau', isCorrect: false, colorBg: 'bg-green-500' },
+                    { text: 'Kuning', isCorrect: false, colorBg: 'bg-yellow-400' }
+                ],
+                speech: "Manakah warna Merah?"
+            },
+            // Haiwan (Fruits / Animals Questions)
+            {
+                type: 'colors',
+                category: 'Kenal Haiwan',
+                question: 'Yang manakah Badak Sumbu?',
+                targetHtml: '<div class="text-6xl">❓</div>',
+                options: [
+                    { text: 'Badak Sumbu', isCorrect: true, emoji: '🦏' },
+                    { text: 'Gajah', isCorrect: false, emoji: '🐘' },
+                    { text: 'Kucing', isCorrect: false, emoji: '🐱' },
+                    { text: 'Monyet', isCorrect: false, emoji: '🐒' }
+                ],
+                speech: "Yang manakah badak sumbu?"
+            },
+            {
+                type: 'colors',
+                category: 'Kenal Buah',
+                question: 'Yang manakah buah Mangga?',
+                targetHtml: '<div class="text-6xl">❓</div>',
+                options: [
+                    { text: 'Mangga', isCorrect: true, emoji: '🥭' },
+                    { text: 'Epal', isCorrect: false, emoji: '🍎' },
+                    { text: 'Pisang', isCorrect: false, emoji: '🍌' },
+                    { text: 'Anggur', isCorrect: false, emoji: '🍇' }
+                ],
+                speech: "Yang manakah buah mangga?"
+            },
+            // Sains Awal
+            {
+                type: 'science',
+                category: 'Sains Awal',
+                question: 'Anggota badan mana digunakan untuk MELIHAT?',
+                targetHtml: '<div class="text-6xl">👀</div>',
+                options: [
+                    { text: 'Mata', isCorrect: true, emoji: '👁️' },
+                    { text: 'Telinga', isCorrect: false, emoji: '👂' },
+                    { text: 'Hidung', isCorrect: false, emoji: '👃' },
+                    { text: 'Tangan', isCorrect: false, emoji: '✋' }
+                ],
+                speech: "Anggota badan mana digunakan untuk melihat?"
+            },
+            // Agama / Nilai Murni
+            {
+                type: 'islamic',
+                category: 'Pendidikan Islam',
+                question: 'Pilih huruf Hijaiyyah "ALIF"',
+                targetHtml: '<div class="text-7xl font-bold text-emerald-600">ا</div>',
+                options: [
+                    { text: 'Alif (ا)', isCorrect: true },
+                    { text: 'Ba (ب)', isCorrect: false },
+                    { text: 'Ta (ت)', isCorrect: false },
+                    { text: 'Jim (ج)', isCorrect: false }
+                ],
+                speech: "Pilih huruf Hijaiyyah Alif"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let currentPandaSpeechText = "";
+
+        // Navigation
+        function showPage(pageId) {
+            const pages = ['page-home', 'page-subjects', 'page-game', 'page-creativity', 'page-achievements', 'page-parents'];
+            pages.forEach(p => {
+                document.getElementById(p).classList.add('hidden');
+            });
+            document.getElementById(pageId).classList.remove('hidden');
+
+            if (pageId === 'page-creativity') {
+                initCanvas();
+                updatePandaDialog("Jom melukis dan mewarna bersama Biko!");
+            } else if (pageId === 'page-home') {
+                updatePandaDialog("Pilih aktiviti kegemaran kamu kat bawah!");
+            }
+        }
+
+        // Panda Dialog & Speech Synthesis
+        function updatePandaDialog(text) {
+            document.getElementById('panda-dialog').innerText = text;
+            currentPandaSpeechText = text;
+            speakText(text);
+        }
+
+        function speakCurrentPanda() {
+            if (currentPandaSpeechText) {
+                speakText(currentPandaSpeechText);
+            }
+        }
+
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel(); // Stop current speech
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ms-MY'; // Bahasa Melayu
+            utterance.rate = 0.9; // Slightly slower for kids
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Start Subject Specific Game
+        function startSubjectGame(type) {
+            const filtered = questions.filter(q => q.type === type);
+            if (filtered.length > 0) {
+                const randomQ = filtered[Math.floor(Math.random() * filtered.length)];
+                loadQuestion(randomQ);
+                showPage('page-game');
+            } else {
+                startQuickGame();
+            }
+        }
+
+        function startQuickGame() {
+            const randomQ = questions[Math.floor(Math.random() * questions.length)];
+            loadQuestion(randomQ);
+            showPage('page-game');
+        }
+
+        function loadQuestion(q) {
+            document.getElementById('game-category-tag').innerText = q.category;
+            document.getElementById('game-question').innerText = q.question;
+            document.getElementById('game-target').innerHTML = q.targetHtml;
+
+            updatePandaDialog(q.speech);
+
+            const optionsContainer = document.getElementById('game-options');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = `p-4 rounded-2xl font-kids text-lg border-b-4 flex flex-col items-center justify-center space-y-1 shadow-md btn-bounce ${
+                    opt.colorBg ? opt.colorBg + ' text-white' : 'bg-amber-100 border-amber-300 text-amber-900 hover:bg-amber-200'
+                }`;
+                btn.innerHTML = `
+                    ${opt.emoji ? `<span class="text-4xl">${opt.emoji}</span>` : ''}
+                    <span>${opt.text}</span>
+                `;
+                btn.onclick = () => handleAnswer(opt.isCorrect);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(isCorrect) {
+            if (isCorrect) {
+                // Play success sound / confetti
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                
+                // Update State
+                window.gameState.stars += 10;
+                window.gameState.answeredCount += 1;
+                if (window.gameState.stars >= 30) window.gameState.badges = Math.max(window.gameState.badges, 1);
+                if (window.gameState.stars >= 60) window.gameState.badges = Math.max(window.gameState.badges, 2);
+                
+                window.saveState();
+
+                // Show Victory Modal
+                document.getElementById('modal-victory').classList.remove('hidden');
+                updatePandaDialog("Hebat! Jawapan kamu betul sekali! ⭐");
+            } else {
+                updatePandaDialog("Cuba lagi! Kamu hampir berjaya! 💪");
+            }
+        }
+
+        function closeVictoryModal() {
+            document.getElementById('modal-victory').classList.add('hidden');
+            startQuickGame();
+        }
+
+        function updateUI() {
+            document.getElementById('stat-stars').innerText = window.gameState.stars;
+            document.getElementById('stat-badges').innerText = window.gameState.badges;
+            document.getElementById('badge-star-count').innerText = `${window.gameState.stars} ⭐`;
+            document.getElementById('parent-answered').innerText = window.gameState.answeredCount;
+
+            // Badges unlocking UI
+            if (window.gameState.stars >= 10) unlockBadgeUI('badge-1');
+            if (window.gameState.stars >= 30) unlockBadgeUI('badge-2');
+            if (window.gameState.stars >= 50) unlockBadgeUI('badge-3');
+        }
+
+        function unlockBadgeUI(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.remove('opacity-50', 'bg-gray-100');
+                el.classList.add('bg-yellow-100', 'border-yellow-400', 'shadow-md');
+            }
+        }
+
+        // Parent Gate Security Simple Quiz
+        function showParentGate() {
+            const num1 = Math.floor(Math.random() * 5) + 5;
+            const num2 = Math.floor(Math.random() * 5) + 1;
+            const ans = prompt(`KAWALAN IBU BAPA:\nSila selesaikan soalan ini untuk masuk:\n${num1} + ${num2} = ?`);
+            if (parseInt(ans) === (num1 + num2)) {
+                showPage('page-parents');
+                updatePandaDialog("Mod Ibu Bapa diakses.");
+            } else if (ans !== null) {
+                alert("Jawapan tidak tepat. Akses ditolak untuk keselamatan kanak-kanak.");
+            }
+        }
+
+        // Audio Toggle
+        function toggleAudio() {
+            window.gameState.audioEnabled = !window.gameState.audioEnabled;
+            document.getElementById('btn-audio').innerText = window.gameState.audioEnabled ? '🔊' : '🔇';
+            if (!window.gameState.audioEnabled && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // Canvas Drawing Logic
+        let canvas, ctx, isDrawing = false, currentColor = '#EF4444';
+
+        function initCanvas() {
+            canvas = document.getElementById('paintCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Handle touch & mouse
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDraw);
+
+            canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e.touches[0]); });
+            canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
+            canvas.addEventListener('touchend', stopDraw);
+        }
+
+        function setCanvasColor(color) {
+            currentColor = color;
+        }
+
+        function startDraw(e) {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = 8;
+            ctx.lineCap = 'round';
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+        }
+
+        function stopDraw() {
+            isDrawing = false;
+        }
+
+        function clearCanvas() {
+            if (ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        // Global Bindings for HTML Inline Events
+        window.showPage = showPage;
+        window.startSubjectGame = startSubjectGame;
+        window.startQuickGame = startQuickGame;
+        window.closeVictoryModal = closeVictoryModal;
+        window.showParentGate = showParentGate;
+        window.toggleAudio = toggleAudio;
+        window.speakCurrentPanda = speakCurrentPanda;
+        window.setCanvasColor = setCanvasColor;
+        window.clearCanvas = clearCanvas;
+    </script>
 </body>
 </html>
