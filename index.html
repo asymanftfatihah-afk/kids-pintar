@@ -44,27 +44,28 @@
         </div>
         <div>
           <h1 class="text-xl md:text-2xl font-bold text-indigo-700 leading-tight">BIJAK EDUKIDS</h1>
-          <p class="text-xs text-amber-600 font-semibold hidden sm:block">Belajar Seronok, Jadi Bijak!</p>
+          <p class="text-xs text-amber-600 font-semibold hidden sm:block" id="header-subtitle">Belajar Seronok, Jadi Bijak!</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-3 bg-indigo-50 px-4 py-1.5 rounded-full border-2 border-indigo-200 shadow-inner">
-        <div class="flex items-center gap-1 text-amber-500 font-bold text-lg">
+      <div class="flex items-center gap-2 sm:gap-3 bg-indigo-50 px-3 py-1.5 rounded-full border-2 border-indigo-200 shadow-inner">
+        <div class="flex items-center gap-1 text-amber-500 font-bold text-sm sm:text-lg">
           ⭐ <span id="stat-stars">0</span>
         </div>
-        <div class="h-5 w-0.5 bg-indigo-200"></div>
-        <div class="flex items-center gap-1 text-indigo-600 font-bold text-sm md:text-base">
+        <div class="h-4 w-0.5 bg-indigo-200"></div>
+        <div class="flex items-center gap-1 text-indigo-600 font-bold text-xs sm:text-base">
           🏅 Lvl <span id="stat-level">1</span>
-        </div>
-        <div class="h-5 w-0.5 bg-indigo-200"></div>
-        <div class="flex items-center gap-1 text-red-500 font-bold text-sm md:text-base">
-          🔥 <span id="stat-streak">1</span>d
         </div>
       </div>
 
       <div class="flex gap-2">
-        <button id="btn-audio" onclick="toggleAudio()" class="w-10 h-10 rounded-full bg-emerald-400 hover:bg-emerald-500 text-white font-bold flex items-center justify-center shadow-md transition-all active:scale-95">
-          <i class="fas font-bold fa-volume-up"></i>
+        <!-- TOGGLE LANGUAGE BUTTON -->
+        <button onclick="toggleLanguage()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-full text-xs sm:text-sm shadow-md transition active:scale-95 flex items-center gap-1">
+          🌐 <span id="lang-btn-text">BM</span>
+        </button>
+
+        <button id="btn-audio" onclick="toggleAudio()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-emerald-400 hover:bg-emerald-500 text-white font-bold flex items-center justify-center shadow-md transition-all active:scale-95">
+          <i class="fas fa-volume-up"></i>
         </button>
       </div>
     </div>
@@ -80,12 +81,12 @@
           🐥
         </div>
         <div class="text-center sm:text-left z-10 flex-grow">
-          <span class="bg-white text-amber-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">Maskot Teman Biko</span>
-          <h2 class="text-2xl md:text-3xl font-bold mt-1">Hai, Kawan Bijak! 👋</h2>
+          <span class="bg-white text-amber-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm" id="maskot-tag">Teman Biko</span>
+          <h2 class="text-2xl md:text-3xl font-bold mt-1" id="home-welcome">Hai, Kawan Bijak! 👋</h2>
           <p class="text-amber-100 text-base md:text-lg mt-1" id="biko-speech">Saya Biko! Jom belajar dan bermain bersama-sama hari ini!</p>
           <div class="mt-4 flex flex-wrap gap-2 justify-center sm:justify-start">
-            <button onclick="speakBiko('Saya Biko! Jom kita kumpul lebih banyak bintang hari ini!')" class="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur transition border border-white/30">
-              🔊 Dengar Biko
+            <button onclick="speakText(document.getElementById('biko-speech').innerText)" class="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur transition border border-white/30">
+              🔊 <span id="btn-listen-biko">Dengar Biko</span>
             </button>
           </div>
         </div>
@@ -94,38 +95,38 @@
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
         <button onclick="showTab('subjects')" class="bg-gradient-to-b from-emerald-400 to-teal-500 hover:from-emerald-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-teal-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">📚</div>
-          <span class="text-xl font-bold">MULA BELAJAR</span>
-          <span class="text-xs text-teal-100">6 Subjek Utama</span>
+          <span class="text-xl font-bold" id="menu-start">MULA BELAJAR</span>
+          <span class="text-xs text-teal-100" id="menu-start-sub">Pilih Subjek & Level</span>
         </button>
 
         <button onclick="showTab('games')" class="bg-gradient-to-b from-amber-400 to-yellow-500 hover:from-amber-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-yellow-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">🎮</div>
-          <span class="text-xl font-bold">PERMAINAN</span>
-          <span class="text-xs text-yellow-100">Kuiz Interaktif</span>
+          <span class="text-xl font-bold" id="menu-games">PERMAINAN</span>
+          <span class="text-xs text-yellow-100" id="menu-games-sub">Huruf & Nombor</span>
         </button>
 
         <button onclick="showTab('creativity')" class="bg-gradient-to-b from-pink-400 to-rose-500 hover:from-pink-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-rose-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">🎨</div>
-          <span class="text-xl font-bold">KREATIVITI</span>
-          <span class="text-xs text-rose-100">Mewarna & Lukis</span>
+          <span class="text-xl font-bold" id="menu-create">KREATIVITI</span>
+          <span class="text-xs text-rose-100" id="menu-create-sub">Mewarna & Lukis</span>
         </button>
 
         <button onclick="showTab('achievements')" class="bg-gradient-to-b from-purple-400 to-indigo-500 hover:from-purple-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-indigo-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">🏆</div>
-          <span class="text-xl font-bold">PENCAPAIAN</span>
-          <span class="text-xs text-indigo-100">Lencana & Mata</span>
+          <span class="text-xl font-bold" id="menu-achieve">PENCAPAIAN</span>
+          <span class="text-xs text-indigo-100" id="menu-achieve-sub">Lencana & Mata</span>
         </button>
 
-        <button onclick="startDailyChallenge()" class="bg-gradient-to-b from-sky-400 to-blue-500 hover:from-sky-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-blue-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
+        <button onclick="selectLevelAndStart('math')" class="bg-gradient-to-b from-sky-400 to-blue-500 hover:from-sky-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-blue-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">⚡</div>
-          <span class="text-xl font-bold">CABARAN BIJAK</span>
-          <span class="text-xs text-blue-100">Soalan Rawak</span>
+          <span class="text-xl font-bold" id="menu-challenge">CABARAN BIJAK</span>
+          <span class="text-xs text-blue-100" id="menu-challenge-sub">Soalan Mengira</span>
         </button>
 
         <button onclick="openParentsAuth()" class="bg-gradient-to-b from-slate-500 to-slate-700 hover:from-slate-600 text-white p-5 rounded-3xl shadow-lg border-b-8 border-slate-900 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">👨‍👩‍👧</div>
-          <span class="text-xl font-bold">IBU BAPA</span>
-          <span class="text-xs text-slate-300">Mod Kawalan</span>
+          <span class="text-xl font-bold" id="menu-parents">IBU BAPA</span>
+          <span class="text-xs text-slate-300" id="menu-parents-sub">Tetapan & Bahasa</span>
         </button>
       </div>
     </section>
@@ -134,103 +135,106 @@
     <section id="tab-subjects" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
-          <span>📚</span> Pilihan Subjek
+          <span>📚</span> <span id="subj-header">Pilihan Subjek</span>
         </h2>
-        <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
-          ← Kembali Utama
+        <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition" id="btn-back-home">
+          ← Utama
         </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Bahasa Melayu -->
-        <div onclick="startSubjectTopic('bm')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-red-200 hover:border-red-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
+        <div onclick="openLevelModal('bm')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-red-200 hover:border-red-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🔴</div>
           <div>
-            <h3 class="text-xl font-bold text-red-600">Bahasa Melayu</h3>
-            <p class="text-xs text-slate-500">Kenal Huruf A-Z, Suku Kata & Perkataan</p>
+            <h3 class="text-xl font-bold text-red-600" id="subj-bm-title">Bahasa Melayu</h3>
+            <p class="text-xs text-slate-500" id="subj-bm-desc">Huruf A-Z & Suku Kata</p>
           </div>
         </div>
 
         <!-- Matematik Awal -->
-        <div onclick="startSubjectTopic('math')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-blue-200 hover:border-blue-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
+        <div onclick="openLevelModal('math')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-blue-200 hover:border-blue-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🔢</div>
           <div>
-            <h3 class="text-xl font-bold text-blue-600">Matematik Awal</h3>
-            <p class="text-xs text-slate-500">Nombor 1-20, Mengira Objek & Tambah Mudah</p>
+            <h3 class="text-xl font-bold text-blue-600" id="subj-math-title">Matematik Awal</h3>
+            <p class="text-xs text-slate-500" id="subj-math-desc">Kira Buah, Kenderaan & Haiwan</p>
           </div>
         </div>
 
         <!-- Bahasa Inggeris -->
-        <div onclick="startSubjectTopic('english')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-amber-200 hover:border-amber-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
+        <div onclick="openLevelModal('english')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-amber-200 hover:border-amber-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🔤</div>
           <div>
-            <h3 class="text-xl font-bold text-amber-600">Bahasa Inggeris</h3>
-            <p class="text-xs text-slate-500">ABC, Colours, Animals & Easy Words</p>
+            <h3 class="text-xl font-bold text-amber-600" id="subj-en-title">Bahasa Inggeris</h3>
+            <p class="text-xs text-slate-500" id="subj-en-desc">ABC, Colours & Simple Words</p>
           </div>
         </div>
 
         <!-- Sains Awal -->
-        <div onclick="startSubjectTopic('science')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-emerald-200 hover:border-emerald-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
+        <div onclick="openLevelModal('science')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-emerald-200 hover:border-emerald-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🌱</div>
           <div>
-            <h3 class="text-xl font-bold text-emerald-600">Sains Awal</h3>
-            <p class="text-xs text-slate-500">Haiwan, Tumbuhan, Anggota Badan & Cuaca</p>
+            <h3 class="text-xl font-bold text-emerald-600" id="subj-sci-title">Sains Awal</h3>
+            <p class="text-xs text-slate-500" id="subj-sci-desc">Anggota Badan, Kenderaan & Cuaca</p>
           </div>
         </div>
 
-        <!-- Pendidikan Islam / Nilai Murni -->
-        <div onclick="startSubjectTopic('islamic')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-teal-200 hover:border-teal-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
+        <!-- Pendidikan Islam & Hijaiyyah -->
+        <div onclick="openLevelModal('islamic')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-teal-200 hover:border-teal-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🌙</div>
           <div>
-            <h3 class="text-xl font-bold text-teal-600">Pendidikan Islam / Nilai</h3>
-            <p class="text-xs text-slate-500">Adab Harian, Ucapan Salam & Hormat</p>
-          </div>
-        </div>
-
-        <!-- Kreativiti -->
-        <div onclick="showTab('creativity')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-purple-200 hover:border-purple-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
-          <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🎨</div>
-          <div>
-            <h3 class="text-xl font-bold text-purple-600">Kreativiti & Seni</h3>
-            <p class="text-xs text-slate-500">Mewarna, Melukis & Bebas Berkarya</p>
+            <h3 class="text-xl font-bold text-teal-600" id="subj-is-title">Pendidikan Islam & Hijaiyyah</h3>
+            <p class="text-xs text-slate-500" id="subj-is-desc">Huruf Hijaiyyah & Adab Harian</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 3: GAMES HUB -->
+    <!-- MODAL PILIHAN LEVEL / BILANGAN SOALAN -->
+    <div id="level-select-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 border-4 border-indigo-400 shadow-2xl">
+        <h3 class="text-2xl font-bold text-indigo-800" id="modal-level-title">Pilih Bilangan Soalan</h3>
+        <p class="text-xs text-slate-500" id="modal-level-desc">Berapa soalan yang ingin anda jawab?</p>
+        
+        <div class="grid grid-cols-1 gap-3">
+          <button onclick="startSubjectGame(5)" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-2xl shadow border-b-4 border-emerald-700 active:scale-95 text-lg">
+            🌟 5 Soalan (Mudah)
+          </button>
+          <button onclick="startSubjectGame(10)" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-2xl shadow border-b-4 border-amber-700 active:scale-95 text-lg">
+            ⭐ 10 Soalan (Sederhana)
+          </button>
+          <button onclick="startSubjectGame(20)" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-2xl shadow border-b-4 border-indigo-800 active:scale-95 text-lg">
+            🏆 20 Soalan (Cabaran)
+          </button>
+        </div>
+
+        <button onclick="closeLevelModal()" class="w-full bg-slate-300 hover:bg-slate-400 text-slate-800 font-bold py-2 rounded-xl text-sm">
+          Batal
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 3: GAMES HUB (MATCHING GAME) -->
     <section id="tab-games" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
-          <span>🎮</span> Pusat Permainan
+          <span>🎮</span> <span id="game-tab-title">Permainan Padanan Huruf & Nombor</span>
         </h2>
         <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
-          ← Kembali Utama
+          ← Utama
         </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div onclick="startSubjectTopic('bm')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-orange-300 hover:border-orange-500 cursor-pointer transition flex flex-col justify-between">
-          <div class="flex items-center gap-3">
-            <span class="text-5xl">🔤</span>
-            <div>
-              <h3 class="text-xl font-bold text-orange-600">Cari Huruf Awal</h3>
-              <p class="text-xs text-slate-500">Pilih huruf pertama bagi gambar!</p>
-            </div>
-          </div>
-          <button class="mt-4 bg-orange-500 text-white font-bold py-2 rounded-2xl shadow">Main Sekarang →</button>
+      <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-amber-300 text-center space-y-4">
+        <p class="text-indigo-900 font-bold text-lg" id="game-instructions">Tekan dua kad untuk mencari pasangan yang betul!</p>
+        
+        <div id="matching-board" class="grid grid-cols-4 gap-3 max-w-md mx-auto">
+          <!-- Game cards generated via JS -->
         </div>
 
-        <div onclick="startSubjectTopic('math')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-green-300 hover:border-green-500 cursor-pointer transition flex flex-col justify-between">
-          <div class="flex items-center gap-3">
-            <span class="text-5xl">🍎</span>
-            <div>
-              <h3 class="text-xl font-bold text-green-600">Kira Buah-Buahan</h3>
-              <p class="text-xs text-slate-500">Kira bilangan objek dalam kotak!</p>
-            </div>
-          </div>
-          <button class="mt-4 bg-green-500 text-white font-bold py-2 rounded-2xl shadow">Main Sekarang →</button>
-        </div>
+        <button onclick="initMatchingGame()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-2 rounded-full shadow-md text-sm">
+          🔄 Main Semula
+        </button>
       </div>
     </section>
 
@@ -238,11 +242,11 @@
     <section id="tab-play" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between bg-white/80 p-3 rounded-2xl shadow-sm border border-slate-200">
         <button onclick="showTab('subjects')" class="bg-red-400 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 shadow">
-          ✖ Keluar
+          ✖ <span id="btn-exit">Keluar</span>
         </button>
-        <div id="game-title-display" class="font-bold text-indigo-700 text-lg">Subjek Pembelajaran</div>
-        <div class="text-amber-500 font-bold flex items-center gap-1">
-          ⭐ +<span id="game-score-gain">10</span>
+        <div id="game-title-display" class="font-bold text-indigo-700 text-base sm:text-lg">Subjek Pembelajaran</div>
+        <div class="bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-full text-xs sm:text-sm">
+          Soalan: <span id="q-current">1</span> / <span id="q-total">5</span>
         </div>
       </div>
 
@@ -256,7 +260,7 @@
         </div>
 
         <div id="game-dynamic-content" class="my-6 flex flex-col items-center justify-center flex-grow">
-          <!-- Dynamic Content Injected via JS -->
+          <!-- Dynamic Content -->
         </div>
 
         <div id="game-feedback-area" class="h-10 text-center font-bold text-xl flex items-center justify-center">
@@ -271,7 +275,7 @@
           <span>🎨</span> Studio Mewarna & Lukis
         </h2>
         <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
-          ← Kembali Utama
+          ← Utama
         </button>
       </div>
 
@@ -305,26 +309,26 @@
           <span>🏆</span> Galeri Pencapaian
         </h2>
         <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
-          ← Kembali Utama
+          ← Utama
         </button>
       </div>
 
       <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-indigo-200 space-y-4">
         <h3 class="font-bold text-lg text-indigo-900 border-b pb-2">Lencana Terkumpul</h3>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          <div id="badge-1" class="p-4 rounded-2xl bg-slate-100 opacity-50 border-2 border-slate-200 flex flex-col items-center">
+          <div class="p-4 rounded-2xl bg-amber-100 border-2 border-amber-300 flex flex-col items-center">
             <div class="text-4xl mb-1">🌟</div>
             <div class="font-bold text-xs text-slate-800">Penjelajah Muda</div>
           </div>
-          <div id="badge-2" class="p-4 rounded-2xl bg-slate-100 opacity-50 border-2 border-slate-200 flex flex-col items-center">
+          <div class="p-4 rounded-2xl bg-slate-100 border-2 border-slate-200 flex flex-col items-center">
             <div class="text-4xl mb-1">🍎</div>
             <div class="font-bold text-xs text-slate-800">Pakar Nombor</div>
           </div>
-          <div id="badge-3" class="p-4 rounded-2xl bg-slate-100 opacity-50 border-2 border-slate-200 flex flex-col items-center">
+          <div class="p-4 rounded-2xl bg-slate-100 border-2 border-slate-200 flex flex-col items-center">
             <div class="text-4xl mb-1">🔤</div>
             <div class="font-bold text-xs text-slate-800">Juara Huruf</div>
           </div>
-          <div id="badge-4" class="p-4 rounded-2xl bg-slate-100 opacity-50 border-2 border-slate-200 flex flex-col items-center">
+          <div class="p-4 rounded-2xl bg-slate-100 border-2 border-slate-200 flex flex-col items-center">
             <div class="text-4xl mb-1">👑</div>
             <div class="font-bold text-xs text-slate-800">Mutiara Bijak</div>
           </div>
@@ -336,40 +340,41 @@
     <section id="tab-parents" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-          <span>👨‍👩‍👧</span> Mod Ibu Bapa
+          <span>👨‍👩‍👧</span> Mod Ibu Bapa & Tetapan
         </h2>
         <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
-          ← Kembali Utama
+          ← Utama
         </button>
       </div>
 
       <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-slate-300 space-y-6">
         <div class="flex items-center justify-between border-b pb-4">
           <div>
-            <h3 class="text-xl font-bold text-slate-800">Ringkasan Kemajuan Anak</h3>
-            <p class="text-xs text-slate-500">Data tersimpan secara selamat.</p>
+            <h3 class="text-xl font-bold text-slate-800">Tetapan Bahasa Aplikasi</h3>
+            <p class="text-xs text-slate-500">Pilih bahasa rasmi untuk antaramuka aplikasi.</p>
           </div>
-          <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300">
-            🟢 Firebase Aktif
-          </span>
+          <div class="flex gap-2">
+            <button onclick="setLanguage('bm')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-4 py-2 rounded-xl text-xs shadow">
+              Bahasa Melayu
+            </button>
+            <button onclick="setLanguage('en')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow">
+              English
+            </button>
+          </div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div class="bg-slate-50 p-4 rounded-2xl border text-center">
-            <span class="text-xs text-slate-500 font-bold">Masa Belajar</span>
-            <div class="text-2xl font-bold text-indigo-600 mt-1"><span id="parent-time">5</span> Minit</div>
-          </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
           <div class="bg-slate-50 p-4 rounded-2xl border text-center">
             <span class="text-xs text-slate-500 font-bold">Jumlah Bintang</span>
             <div class="text-2xl font-bold text-amber-500 mt-1"><span id="parent-stars">0</span> ⭐</div>
           </div>
           <div class="bg-slate-50 p-4 rounded-2xl border text-center">
-            <span class="text-xs text-slate-500 font-bold">Tahap (Level)</span>
+            <span class="text-xs text-slate-500 font-bold">Tahap Kemajuan</span>
             <div class="text-2xl font-bold text-emerald-600 mt-1">Tahap <span id="parent-level">1</span></div>
           </div>
           <div class="bg-slate-50 p-4 rounded-2xl border text-center">
-            <span class="text-xs text-slate-500 font-bold">Ketetapan</span>
-            <div class="text-2xl font-bold text-red-500 mt-1"><span id="parent-streak">1</span> Hari</div>
+            <span class="text-xs text-slate-500 font-bold">Status Bunyi</span>
+            <div class="text-xl font-bold text-indigo-600 mt-1" id="parent-sound-status">Aktif</div>
           </div>
         </div>
       </div>
@@ -381,7 +386,7 @@
   <div id="reward-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full text-center space-y-4 border-4 border-amber-400 shadow-2xl">
       <div class="text-6xl bouncy">🎉</div>
-      <h3 class="text-2xl font-bold text-amber-500">TAHNIAH, BIJAK!</h3>
+      <h3 class="text-2xl font-bold text-amber-500" id="modal-reward-title">TAHNIAH, BIJAK!</h3>
       <p class="text-slate-600 text-sm" id="modal-subtext">Jawapan anda tepat sekali!</p>
       
       <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 flex justify-around">
@@ -389,15 +394,10 @@
           <div class="text-2xl font-bold text-amber-500">+10</div>
           <div class="text-xs text-amber-700 font-bold">⭐ Bintang</div>
         </div>
-        <div class="h-8 w-0.5 bg-amber-200"></div>
-        <div>
-          <div class="text-2xl font-bold text-indigo-500">+50</div>
-          <div class="text-xs text-indigo-700 font-bold">💎 Mata</div>
-        </div>
       </div>
 
-      <button onclick="closeRewardModal()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-2xl shadow-lg active:scale-95 text-lg">
-        TERUSKAN BELAJAR 🚀
+      <button onclick="nextQuestionOrFinish()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-2xl shadow-lg active:scale-95 text-lg" id="btn-next">
+        SOALAN SETERUSNYA 🚀
       </button>
     </div>
   </div>
@@ -407,97 +407,141 @@
     <div class="max-w-md mx-auto flex justify-around items-center">
       <button onclick="showTab('home')" class="flex flex-col items-center text-indigo-600">
         <span class="text-xl">🏠</span>
-        <span class="text-[10px] font-bold">UTAMA</span>
+        <span class="text-[10px] font-bold" id="nav-home">UTAMA</span>
       </button>
       <button onclick="showTab('subjects')" class="flex flex-col items-center text-indigo-600">
         <span class="text-xl">📚</span>
-        <span class="text-[10px] font-bold">SUBJEK</span>
+        <span class="text-[10px] font-bold" id="nav-subjects">SUBJEK</span>
       </button>
       <button onclick="showTab('games')" class="flex flex-col items-center text-indigo-600">
         <span class="text-xl">🎮</span>
-        <span class="text-[10px] font-bold">PERMAINAN</span>
+        <span class="text-[10px] font-bold" id="nav-games">PERMAINAN</span>
       </button>
       <button onclick="showTab('creativity')" class="flex flex-col items-center text-indigo-600">
         <span class="text-xl">🎨</span>
-        <span class="text-[10px] font-bold">KREATIVITI</span>
-      </button>
-      <button onclick="showTab('achievements')" class="flex flex-col items-center text-indigo-600">
-        <span class="text-xl">🏆</span>
-        <span class="text-[10px] font-bold">GANJARAN</span>
+        <span class="text-[10px] font-bold" id="nav-create">KREATIVITI</span>
       </button>
     </div>
   </nav>
 
   <!-- JAVASCRIPT ENGINE -->
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDczzfjllLDnwtHeZ4KC8ue22piSJkIrLM",
-      authDomain: "kids-pintar.firebaseapp.com",
-      databaseURL: "https://kids-pintar-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "kids-pintar",
-      storageBucket: "kids-pintar.firebasestorage.app",
-      messagingSenderId: "124238780825",
-      appId: "1:124238780825:web:96d639637c6fe044b29b08",
-      measurementId: "G-RJ75DSLH94"
-    };
+    let currentLang = 'bm'; // 'bm' atau 'en'
+    let state = { stars: 0, level: 1, audioMuted: false };
 
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-    const db = firebase.database();
-
-    let state = {
-      stars: 0,
-      points: 0,
-      level: 1,
-      streak: 1,
-      minutesLearned: 5,
-      audioMuted: false,
-      completedGamesCount: 0
-    };
-
-    function loadSavedState() {
-      const saved = localStorage.getItem('kids_pintar_state');
-      if (saved) {
-        try { state = JSON.parse(saved); } catch(e){}
+    // BAHASA DICTIONARY (DWIBAHASA)
+    const translations = {
+      bm: {
+        subtitle: "Belajar Seronok, Jadi Bijak!",
+        welcome: "Hai, Kawan Bijak! 👋",
+        bikoSpeech: "Saya Biko! Jom belajar dan bermain bersama-sama hari ini!",
+        listenBiko: "Dengar Biko",
+        menuStart: "MULA BELAJAR",
+        menuStartSub: "Pilih Subjek & Level",
+        menuGames: "PERMAINAN",
+        menuGamesSub: "Huruf & Nombor",
+        menuCreate: "KREATIVITI",
+        menuCreateSub: "Mewarna & Lukis",
+        menuAchieve: "PENCAPAIAN",
+        menuAchieveSub: "Lencana & Mata",
+        menuChallenge: "CABARAN BIJAK",
+        menuChallengeSub: "Soalan Mengira",
+        menuParents: "IBU BAPA",
+        menuParentsSub: "Tetapan & Bahasa",
+        subjHeader: "Pilihan Subjek",
+        btnBackHome: "← Utama",
+        exit: "Keluar",
+        next: "SOALAN SETERUSNYA 🚀",
+        navHome: "UTAMA",
+        navSubjects: "SUBJEK",
+        navGames: "PERMAINAN",
+        navCreate: "KREATIVITI"
+      },
+      en: {
+        subtitle: "Learn & Have Fun!",
+        welcome: "Hello, Smart Friend! 👋",
+        bikoSpeech: "I'm Biko! Let's learn and play together today!",
+        listenBiko: "Listen to Biko",
+        menuStart: "START LEARNING",
+        menuStartSub: "Choose Subject & Level",
+        menuGames: "GAMES",
+        menuGamesSub: "Letters & Numbers",
+        menuCreate: "CREATIVITY",
+        menuCreateSub: "Coloring & Drawing",
+        menuAchieve: "ACHIEVEMENTS",
+        menuAchieveSub: "Badges & Stars",
+        menuChallenge: "QUICK QUIZ",
+        menuChallengeSub: "Counting Quiz",
+        menuParents: "PARENTS",
+        menuParentsSub: "Settings & Language",
+        subjHeader: "Choose Subject",
+        btnBackHome: "← Home",
+        exit: "Exit",
+        next: "NEXT QUESTION 🚀",
+        navHome: "HOME",
+        navSubjects: "SUBJECTS",
+        navGames: "GAMES",
+        navCreate: "CREATE"
       }
-      updateUIStats();
+    };
+
+    function toggleLanguage() {
+      setLanguage(currentLang === 'bm' ? 'en' : 'bm');
     }
 
-    function saveState() {
-      localStorage.setItem('kids_pintar_state', JSON.stringify(state));
-      updateUIStats();
-      try {
-        db.ref('users/child_guest_1').set({
-          stars: state.stars,
-          points: state.points,
-          level: state.level,
-          streak: state.streak,
-          minutesLearned: state.minutesLearned,
-          lastUpdated: new Date().toISOString()
-        });
-      } catch (err) {}
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.getElementById('lang-btn-text').innerText = lang.toUpperCase();
+      const t = translations[lang];
+
+      document.getElementById('header-subtitle').innerText = t.subtitle;
+      document.getElementById('home-welcome').innerText = t.welcome;
+      document.getElementById('biko-speech').innerText = t.bikoSpeech;
+      document.getElementById('btn-listen-biko').innerText = t.listenBiko;
+
+      document.getElementById('menu-start').innerText = t.menuStart;
+      document.getElementById('menu-start-sub').innerText = t.menuStartSub;
+      document.getElementById('menu-games').innerText = t.menuGames;
+      document.getElementById('menu-games-sub').innerText = t.menuGamesSub;
+      document.getElementById('menu-create').innerText = t.menuCreate;
+      document.getElementById('menu-create-sub').innerText = t.menuCreateSub;
+      document.getElementById('menu-achieve').innerText = t.menuAchieve;
+      document.getElementById('menu-achieve-sub').innerText = t.menuAchieveSub;
+      document.getElementById('menu-challenge').innerText = t.menuChallenge;
+      document.getElementById('menu-challenge-sub').innerText = t.menuChallengeSub;
+      document.getElementById('menu-parents').innerText = t.menuParents;
+      document.getElementById('menu-parents-sub').innerText = t.menuParentsSub;
+
+      document.getElementById('subj-header').innerText = t.subjHeader;
+      document.getElementById('btn-back-home').innerText = t.btnBackHome;
+      document.getElementById('btn-exit').innerText = t.exit;
+      document.getElementById('btn-next').innerText = t.next;
+
+      document.getElementById('nav-home').innerText = t.navHome;
+      document.getElementById('nav-subjects').innerText = t.navSubjects;
+      document.getElementById('nav-games').innerText = t.navGames;
+      document.getElementById('nav-create').innerText = t.navCreate;
     }
 
-    function updateUIStats() {
-      document.getElementById('stat-stars').innerText = state.stars;
-      document.getElementById('stat-level').innerText = state.level;
-      document.getElementById('stat-streak').innerText = state.streak;
-      document.getElementById('parent-stars').innerText = state.stars;
-      document.getElementById('parent-level').innerText = state.level;
-      document.getElementById('parent-streak').innerText = state.streak;
-      document.getElementById('parent-time').innerText = state.minutesLearned;
-    }
-
-    function speakBiko(text) {
+    // PEMBAIKAN SUARA BAHASA MELAYU ASLI (NATIVE TTS VOICE)
+    function speakText(text) {
       if (state.audioMuted) return;
-      document.getElementById('biko-speech').innerText = text;
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ms-MY';
-        utterance.rate = 0.9;
-        utterance.pitch = 1.2;
+        
+        // Pilih bahasa mengikut mod dwibahasa
+        utterance.lang = (currentLang === 'bm') ? 'ms-MY' : 'en-US';
+        
+        // Cari suara Bahasa Melayu/Indonesia tempatan jika ada untuk mengelakkan slang
+        const voices = window.speechSynthesis.getVoices();
+        const localVoice = voices.find(v => v.lang.includes('ms') || v.lang.includes('id'));
+        if (localVoice && currentLang === 'bm') {
+          utterance.voice = localVoice;
+        }
+
+        utterance.rate = 0.85; // Kelajuan perlahan & jelas untuk kanak-kanak
+        utterance.pitch = 1.1; // Nada mesra
         window.speechSynthesis.speak(utterance);
       }
     }
@@ -506,81 +550,122 @@
       state.audioMuted = !state.audioMuted;
       const btn = document.getElementById('btn-audio');
       if (state.audioMuted) {
-        btn.className = "w-10 h-10 rounded-full bg-slate-400 text-white font-bold flex items-center justify-center shadow-md";
+        btn.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-400 text-white font-bold flex items-center justify-center shadow-md";
         btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
         window.speechSynthesis.cancel();
       } else {
-        btn.className = "w-10 h-10 rounded-full bg-emerald-400 text-white font-bold flex items-center justify-center shadow-md";
+        btn.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-emerald-400 text-white font-bold flex items-center justify-center shadow-md";
         btn.innerHTML = '<i class="fas fa-volume-up"></i>';
-        speakBiko("Bunyi dihidupkan!");
+        speakText(currentLang === 'bm' ? "Bunyi dihidupkan!" : "Sound activated!");
       }
     }
 
     function showTab(tabId) {
-      const tabs = document.querySelectorAll('.tab-content');
-      tabs.forEach(tab => tab.classList.add('hidden'));
-
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
       const activeTab = document.getElementById(`tab-${tabId}`);
-      if (activeTab) {
-        activeTab.classList.remove('hidden');
-      }
+      if (activeTab) activeTab.classList.remove('hidden');
 
-      if (tabId === 'home') {
-        speakBiko("Selamat kembali ke laman utama!");
-      } else if (tabId === 'subjects') {
-        speakBiko("Pilih subjek yang kamu mahu belajar!");
-      } else if (tabId === 'creativity') {
-        initCanvas();
-        speakBiko("Mari lukis dan mewarna!");
-      }
+      if (tabId === 'home') speakText(translations[currentLang].welcome);
+      if (tabId === 'games') initMatchingGame();
+      if (tabId === 'creativity') initCanvas();
     }
 
-    // BANK SOALAN ASLI MENGIKUT SUBJEK
-    const subjectQuestions = {
+    // BANK SOALAN (MEMENUHI SYARAT BEBAS ANJING & SOALAN MENGIRA SAHAJA)
+    const masterQuestions = {
       bm: [
-        { title: "Bahasa Melayu", instruction: "Cari huruf awal bagi gambar AYAM!", image: "🐓", options: ["A", "B", "C"], answer: "A" },
-        { title: "Bahasa Melayu", instruction: "Cari huruf awal bagi gambar BUKU!", image: "📚", options: ["K", "B", "D"], answer: "B" },
-        { title: "Bahasa Melayu", instruction: "Cari huruf awal bagi gambar CICAK!", image: "🦎", options: ["S", "M", "C"], answer: "C" }
+        { title: "Bahasa Melayu", instruction: "Manakah huruf awal bagi gambar AYAM?", image: "🐓", options: ["A", "B", "C"], answer: "A" },
+        { title: "Bahasa Melayu", instruction: "Manakah huruf awal bagi gambar BUKU?", image: "📚", options: ["K", "B", "D"], answer: "B" },
+        { title: "Bahasa Melayu", instruction: "Manakah huruf awal bagi gambar CICAK?", image: "🦎", options: ["S", "M", "C"], answer: "C" },
+        { title: "Bahasa Melayu", instruction: "Pilih ejaan yang betul untuk OBJEK ini!", image: "🚗", options: ["Kereta", "Kuda", "Kerusi"], answer: "Kereta" },
+        { title: "Bahasa Melayu", instruction: "Pilih ejaan yang betul untuk HIASAN ini!", image: "🎈", options: ["Belon", "Baju", "Bola"], answer: "Belon" }
       ],
       math: [
-        { title: "Matematik Awal", instruction: "Berapa biji epal di bawah?", image: "🍎 🍎 🍎 🍎 🍎", options: ["3", "5", "7"], answer: "5" },
-        { title: "Matematik Awal", instruction: "Kira berapa ekor kucing ini!", image: "🐱 🐱 🐱", options: ["2", "3", "4"], answer: "3" },
-        { title: "Matematik Awal", instruction: "Berapakah hasil 2 + 1 = ?", image: "➕", options: ["3", "5", "1"], answer: "3" }
+        // HANYA MENGIRA OBJEK (BUAH, KENDERAAN, HAIWAN - TIADA ANJING, TIADA TAMBAH)
+        { title: "Matematik Awal", instruction: "Kira berapa biji epal di bawah!", image: "🍎 🍎 🍎", options: ["2", "3", "5"], answer: "3" },
+        { title: "Matematik Awal", instruction: "Kira berapa ekor kucing ini!", image: "🐱 🐱 🐱 🐱", options: ["3", "4", "6"], answer: "4" },
+        { title: "Matematik Awal", instruction: "Berapa buah kereta yang ada?", image: "🚗 🚗", options: ["1", "2", "4"], answer: "2" },
+        { title: "Matematik Awal", instruction: "Kira berapa biji pisang ini!", image: "🍌 🍌 🍌 🍌 🍌", options: ["4", "5", "7"], answer: "5" },
+        { title: "Matematik Awal", instruction: "Kira berapa ekor burung di atas pokok!", image: "🐦 🐦 🐦", options: ["3", "2", "5"], answer: "3" },
+        { title: "Matematik Awal", instruction: "Kira berapa buah bas ini!", image: "🚌 🚌 🚌", options: ["2", "3", "4"], answer: "3" }
       ],
       english: [
-        { title: "Bahasa Inggeris", instruction: "What animal is this?", image: "🐶", options: ["Cat", "Dog", "Bird"], answer: "Dog" },
-        { title: "Bahasa Inggeris", instruction: "What colour is this banana?", image: "🍌", options: ["Yellow", "Red", "Blue"], answer: "Yellow" }
+        // ENGLISH - NO DOGS
+        { title: "Bahasa Inggeris", instruction: "What animal is this?", image: "🐱", options: ["Cat", "Rabbit", "Bird"], answer: "Cat" },
+        { title: "Bahasa Inggeris", instruction: "What colour is this fruit?", image: "🍌", options: ["Yellow", "Red", "Blue"], answer: "Yellow" },
+        { title: "Bahasa Inggeris", instruction: "What vehicle is this?", image: "✈️", options: ["Airplane", "Car", "Ship"], answer: "Airplane" },
+        { title: "Bahasa Inggeris", instruction: "Choose the correct word!", image: "🍎", options: ["Apple", "Orange", "Grape"], answer: "Apple" }
       ],
       science: [
-        { title: "Sains Awal", instruction: "Manakah merupakan pokok/tumbuhan?", image: "🌳 🆚 🪨", options: ["Pokok", "Batu", "Kerusi"], answer: "Pokok" },
-        { title: "Sains Awal", instruction: "Apakah cuaca di dalam gambar ini?", image: "🌧️", options: ["Hujan", "Panas", "Angin"], answer: "Hujan" }
+        // SAINS - ANGGOTA BADAN, KENDERAAN, CUACA SAHAJA
+        { title: "Sains Awal", instruction: "Manakah anggota badan untuk melihat?", image: "👀", options: ["Mata", "Telinga", "Tangan"], answer: "Mata" },
+        { title: "Sains Awal", instruction: "Apakah jenis kenderaan ini?", image: "🚀", options: ["Roket", "Kapal Terbang", "Kereta"], answer: "Roket" },
+        { title: "Sains Awal", instruction: "Apakah cuaca dalam gambar ini?", image: "🌧️", options: ["Hujan", "Panas", "Ribut"], answer: "Hujan" },
+        { title: "Sains Awal", instruction: "Manakah anggota badan untuk mendengar bunyi?", image: "👂", options: ["Telinga", "Hidung", "Kaki"], answer: "Telinga" },
+        { title: "Sains Awal", instruction: "Apakah cuaca jika matahari kelihatan terang?", image: "☀️", options: ["Panas / Cerah", "Hujan", "Salji"], answer: "Panas / Cerah" }
       ],
       islamic: [
+        // PENDIDIKAN ISLAM & HIJAIYYAH
+        { title: "Pendidikan Islam", instruction: "Apakah huruf Hijaiyyah ini?", image: "ا", options: ["Alif (ا)", "Ba (ب)", "Ta (ت)"], answer: "Alif (ا)" },
+        { title: "Pendidikan Islam", instruction: "Apakah huruf Hijaiyyah ini?", image: "ب", options: ["Alif (ا)", "Ba (ب)", "Jim (ج)"], answer: "Ba (ب)" },
         { title: "Pendidikan Islam", instruction: "Apakah ucapan salam apabila bertemu kawan?", image: "🤝", options: ["Assalamu'alaikum", "Selamat Pagi", "Terima Kasih"], answer: "Assalamu'alaikum" },
-        { title: "Pendidikan Islam", instruction: "Sebelum makan kita perlu membaca?", image: "🍽️", options: ["Doa Makan", "Doa Tidur", "Niat Puasa"], answer: "Doa Makan" }
+        { title: "Pendidikan Islam", instruction: "Sebelum makan kita perlu membaca?", image: "🍽️", options: ["Doa Makan", "Doa Tidur", "Niat Wuduk"], answer: "Doa Makan" }
       ]
     };
 
-    let currentQuestion = null;
-    let currentSubjectKey = 'bm';
+    let selectedSubject = 'bm';
+    let questionPool = [];
+    let currentQuestionIndex = 0;
+    let totalQuestionsCount = 5;
 
-    function startSubjectTopic(subjKey) {
-      currentSubjectKey = subjKey;
-      showTab('play');
+    function openLevelModal(subjKey) {
+      selectedSubject = subjKey;
+      document.getElementById('level-select-modal').classList.remove('hidden');
+    }
+
+    function closeLevelModal() {
+      document.getElementById('level-select-modal').classList.add('hidden');
+    }
+
+    function selectLevelAndStart(subjKey) {
+      selectedSubject = subjKey;
+      startSubjectGame(5);
+    }
+
+    function startSubjectGame(questionCount) {
+      closeLevelModal();
+      totalQuestionsCount = questionCount;
+      currentQuestionIndex = 0;
+
+      // Ambil soalan mengikut subjek & jana secara rawak
+      const baseList = masterQuestions[selectedSubject] || masterQuestions.bm;
+      questionPool = [];
       
-      const qList = subjectQuestions[subjKey] || subjectQuestions.bm;
-      currentQuestion = qList[Math.floor(Math.random() * qList.length)];
+      for (let i = 0; i < totalQuestionsCount; i++) {
+        const randItem = baseList[Math.floor(Math.random() * baseList.length)];
+        questionPool.push(randItem);
+      }
 
-      document.getElementById('game-title-display').innerText = currentQuestion.title;
-      document.getElementById('game-biko-instruction').innerText = currentQuestion.instruction;
-      speakBiko(currentQuestion.instruction);
+      showTab('play');
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = questionPool[currentQuestionIndex];
+      document.getElementById('q-current').innerText = currentQuestionIndex + 1;
+      document.getElementById('q-total').innerText = totalQuestionsCount;
+
+      document.getElementById('game-title-display').innerText = q.title;
+      document.getElementById('game-biko-instruction').innerText = q.instruction;
+      document.getElementById('game-feedback-area').innerHTML = '';
+
+      speakText(q.instruction);
 
       const contentBox = document.getElementById('game-dynamic-content');
       contentBox.innerHTML = `
-        <div class="text-7xl md:text-8xl my-4 bouncy">${currentQuestion.image}</div>
+        <div class="text-7xl md:text-8xl my-4 bouncy">${q.image}</div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-md mt-4">
-          ${currentQuestion.options.map(opt => `
-            <button onclick="checkSubjectAnswer('${opt}')" class="bg-gradient-to-b from-amber-300 to-amber-400 hover:from-amber-400 border-b-4 border-amber-600 text-indigo-900 font-bold text-xl py-3 px-2 rounded-2xl shadow active:scale-95 transition">
+          ${q.options.map(opt => `
+            <button onclick="checkAnswer('${opt}', '${q.answer}')" class="bg-gradient-to-b from-amber-300 to-amber-400 hover:from-amber-400 border-b-4 border-amber-600 text-indigo-900 font-bold text-lg sm:text-xl py-3 px-2 rounded-2xl shadow active:scale-95 transition">
               ${opt}
             </button>
           `).join('')}
@@ -588,40 +673,39 @@
       `;
     }
 
-    function checkSubjectAnswer(selected) {
-      if (selected === currentQuestion.answer) {
-        document.getElementById('game-feedback-area').innerHTML = `<span class="text-emerald-600 font-bold">🎉 Syabas, Betul!</span>`;
-        speakBiko("Bagus sekali! Jawapan kamu tepat!");
+    function checkAnswer(selected, correct) {
+      if (selected === correct) {
+        document.getElementById('game-feedback-area').innerHTML = `<span class="text-emerald-600 font-bold">🎉 Syabas, Jawapan Betul!</span>`;
+        speakText(currentLang === 'bm' ? "Bagus sekali! Jawapan kamu tepat!" : "Great job! That is correct!");
 
         confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
-
         state.stars += 10;
-        state.points += 50;
-        saveState();
+        document.getElementById('stat-stars').innerText = state.stars;
+        document.getElementById('parent-stars').innerText = state.stars;
 
         setTimeout(() => {
           document.getElementById('reward-modal').classList.remove('hidden');
-        }, 800);
+        }, 700);
       } else {
-        document.getElementById('game-feedback-area').innerHTML = `<span class="text-amber-600">Cuba lagi, kamu hampir berjaya!</span>`;
-        speakBiko("Cuba lagi, kamu pasti boleh!");
+        document.getElementById('game-feedback-area').innerHTML = `<span class="text-amber-600">Cuba lagi, anda pasti boleh!</span>`;
+        speakText(currentLang === 'bm' ? "Cuba lagi!" : "Try again!");
       }
     }
 
-    function closeRewardModal() {
+    function nextQuestionOrFinish() {
       document.getElementById('reward-modal').classList.add('hidden');
-      // Terus berikan soalan seterusnya bagi subjek yang sama
-      startSubjectTopic(currentSubjectKey);
+      currentQuestionIndex++;
+      if (currentQuestionIndex < totalQuestionsCount) {
+        loadQuestion();
+      } else {
+        speakText(currentLang === 'bm' ? "Tahniah! Anda telah selesai menjawab semua soalan!" : "Congratulations! You completed all questions!");
+        showTab('subjects');
+      }
     }
 
     function repeatInstruction() {
-      if (currentQuestion) speakBiko(currentQuestion.instruction);
-    }
-
-    function startDailyChallenge() {
-      const keys = ['bm', 'math', 'english', 'science', 'islamic'];
-      const randomKey = keys[Math.floor(Math.random() * keys.length)];
-      startSubjectTopic(randomKey);
+      const q = questionPool[currentQuestionIndex];
+      if (q) speakText(q.instruction);
     }
 
     function openParentsAuth() {
@@ -631,6 +715,65 @@
       if (parseInt(ans) === (num1 + num2)) {
         showTab('parents');
       }
+    }
+
+    // GAME INTERAKTIF: MATCHING CARD GAME (HURUF & NOMBOR)
+    const cardData = ['A', 'A', '1', '1', 'B', 'B', '2', '2', 'C', 'C', '3', '3'];
+    let flippedCards = [];
+    let matchedPairs = 0;
+
+    function initMatchingGame() {
+      const board = document.getElementById('matching-board');
+      board.innerHTML = '';
+      flippedCards = [];
+      matchedPairs = 0;
+
+      const shuffled = [...cardData].sort(() => 0.5 - Math.random());
+      shuffled.forEach((val, idx) => {
+        const card = document.createElement('div');
+        card.className = "h-20 bg-amber-400 rounded-2xl flex items-center justify-center text-3xl font-bold text-indigo-900 cursor-pointer shadow-lg border-b-4 border-amber-600 active:scale-95 transition";
+        card.dataset.value = val;
+        card.dataset.index = idx;
+        card.innerText = '❓';
+        card.onclick = () => flipCard(card);
+        board.appendChild(card);
+      });
+    }
+
+    function flipCard(card) {
+      if (flippedCards.length < 2 && card.innerText === '❓') {
+        card.innerText = card.dataset.value;
+        card.classList.remove('bg-amber-400');
+        card.classList.add('bg-white');
+        flippedCards.push(card);
+
+        if (flippedCards.length === 2) {
+          setTimeout(checkMatch, 700);
+        }
+      }
+    }
+
+    function checkMatch() {
+      const [c1, c2] = flippedCards;
+      if (c1.dataset.value === c2.dataset.value) {
+        c1.classList.add('bg-emerald-200', 'border-emerald-500');
+        c2.classList.add('bg-emerald-200', 'border-emerald-500');
+        matchedPairs++;
+        speakText(c1.dataset.value);
+
+        if (matchedPairs === cardData.length / 2) {
+          confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+          speakText(currentLang === 'bm' ? "Syabas! Anda berjaya padankan semua huruf dan nombor!" : "Awesome! You matched all cards!");
+        }
+      } else {
+        c1.innerText = '❓';
+        c2.innerText = '❓';
+        c1.classList.remove('bg-white');
+        c2.classList.remove('bg-white');
+        c1.classList.add('bg-amber-400');
+        c2.classList.add('bg-amber-400');
+      }
+      flippedCards = [];
     }
 
     // CANVAS DRAWING ENGINE
@@ -665,7 +808,7 @@
     function stopDraw() { isDrawing = false; }
     function clearCanvas() { if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-    window.onload = () => { loadSavedState(); };
+    window.onload = () => { setLanguage('bm'); };
   </script>
 </body>
 </html>
