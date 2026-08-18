@@ -31,24 +31,6 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
-    .pulse-glow {
-      animation: pulseGlow 1.5s infinite alternate;
-    }
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 10px rgba(255, 204, 0, 0.4); }
-      100% { box-shadow: 0 0 25px rgba(255, 204, 0, 0.9); }
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 8px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #4C1D95;
-      border-radius: 10px;
-    }
   </style>
 </head>
 <body class="bg-gradient-to-b from-sky-300 via-indigo-100 to-amber-100 min-h-screen text-slate-800 flex flex-col justify-between overflow-x-hidden">
@@ -56,7 +38,6 @@
   <!-- TOP HEADER / STATUS BAR -->
   <header class="bg-white/90 backdrop-blur border-b-4 border-amber-400 p-3 shadow-lg sticky top-0 z-40">
     <div class="max-w-5xl mx-auto flex justify-between items-center">
-      <!-- Logo App -->
       <div onclick="showTab('home')" class="flex items-center gap-2 cursor-pointer">
         <div class="w-10 h-10 bg-amber-400 rounded-full flex items-center justify-center text-white text-2xl font-bold border-2 border-amber-500 shadow">
           🐣
@@ -67,7 +48,6 @@
         </div>
       </div>
 
-      <!-- User Stats -->
       <div class="flex items-center gap-3 bg-indigo-50 px-4 py-1.5 rounded-full border-2 border-indigo-200 shadow-inner">
         <div class="flex items-center gap-1 text-amber-500 font-bold text-lg">
           ⭐ <span id="stat-stars">0</span>
@@ -82,7 +62,6 @@
         </div>
       </div>
 
-      <!-- Audio Toggle Controls -->
       <div class="flex gap-2">
         <button id="btn-audio" onclick="toggleAudio()" class="w-10 h-10 rounded-full bg-emerald-400 hover:bg-emerald-500 text-white font-bold flex items-center justify-center shadow-md transition-all active:scale-95">
           <i class="fas font-bold fa-volume-up"></i>
@@ -94,9 +73,8 @@
   <!-- MAIN CONTAINER -->
   <main class="max-w-4xl mx-auto w-full p-4 flex-grow flex flex-col justify-center">
 
-    <!-- HOME TAB -->
+    <!-- TAB 1: HOME -->
     <section id="tab-home" class="tab-content block space-y-6">
-      <!-- Mascot Biko Welcome Banner -->
       <div class="bg-gradient-to-r from-amber-400 to-orange-400 rounded-3xl p-6 shadow-xl border-4 border-white text-white relative overflow-hidden flex flex-col sm:flex-row items-center gap-6">
         <div class="w-28 h-28 bg-white/20 rounded-full flex items-center justify-center text-6xl shadow-inner bouncy flex-shrink-0 border-2 border-white/50">
           🐥
@@ -113,45 +91,38 @@
         </div>
       </div>
 
-      <!-- Quick Action Menu Cards Grid -->
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <!-- Main Learn Button -->
-        <button onclick="showTab('subjects')" class="bg-gradient-to-b from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white p-5 rounded-3xl shadow-lg border-b-8 border-teal-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
+        <button onclick="showTab('subjects')" class="bg-gradient-to-b from-emerald-400 to-teal-500 hover:from-emerald-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-teal-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">📚</div>
           <span class="text-xl font-bold">MULA BELAJAR</span>
           <span class="text-xs text-teal-100">6 Subjek Utama</span>
         </button>
 
-        <!-- Games Button -->
-        <button onclick="showTab('games')" class="bg-gradient-to-b from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white p-5 rounded-3xl shadow-lg border-b-8 border-yellow-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
+        <button onclick="showTab('games')" class="bg-gradient-to-b from-amber-400 to-yellow-500 hover:from-amber-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-yellow-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">🎮</div>
           <span class="text-xl font-bold">PERMAINAN</span>
           <span class="text-xs text-yellow-100">Kuiz Interaktif</span>
         </button>
 
-        <!-- Creativity Button -->
-        <button onclick="showTab('creativity')" class="bg-gradient-to-b from-pink-400 to-rose-500 hover:from-pink-500 hover:to-rose-600 text-white p-5 rounded-3xl shadow-lg border-b-8 border-rose-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
+        <button onclick="showTab('creativity')" class="bg-gradient-to-b from-pink-400 to-rose-500 hover:from-pink-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-rose-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">🎨</div>
           <span class="text-xl font-bold">KREATIVITI</span>
           <span class="text-xs text-rose-100">Mewarna & Lukis</span>
         </button>
 
-        <!-- Achievements -->
-        <button onclick="showTab('achievements')" class="bg-gradient-to-b from-purple-400 to-indigo-500 hover:from-purple-500 hover:to-indigo-600 text-white p-5 rounded-3xl shadow-lg border-b-8 border-indigo-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
+        <button onclick="showTab('achievements')" class="bg-gradient-to-b from-purple-400 to-indigo-500 hover:from-purple-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-indigo-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">🏆</div>
           <span class="text-xl font-bold">PENCAPAIAN</span>
           <span class="text-xs text-indigo-100">Lencana & Mata</span>
         </button>
 
-        <!-- Daily Challenge -->
-        <button onclick="startDailyChallenge()" class="bg-gradient-to-b from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white p-5 rounded-3xl shadow-lg border-b-8 border-blue-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
+        <button onclick="startDailyChallenge()" class="bg-gradient-to-b from-sky-400 to-blue-500 hover:from-sky-500 text-white p-5 rounded-3xl shadow-lg border-b-8 border-blue-700 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">⚡</div>
           <span class="text-xl font-bold">CABARAN BIJAK</span>
           <span class="text-xs text-blue-100">Soalan Rawak</span>
         </button>
 
-        <!-- Parents Mode -->
-        <button onclick="openParentsAuth()" class="bg-gradient-to-b from-slate-500 to-slate-700 hover:from-slate-600 hover:to-slate-800 text-white p-5 rounded-3xl shadow-lg border-b-8 border-slate-900 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
+        <button onclick="openParentsAuth()" class="bg-gradient-to-b from-slate-500 to-slate-700 hover:from-slate-600 text-white p-5 rounded-3xl shadow-lg border-b-8 border-slate-900 flex flex-col items-center justify-center gap-2 transform active:scale-95 transition-all">
           <div class="text-5xl">👨‍👩‍👧</div>
           <span class="text-xl font-bold">IBU BAPA</span>
           <span class="text-xs text-slate-300">Mod Kawalan</span>
@@ -159,88 +130,89 @@
       </div>
     </section>
 
-    <!-- SUBJEK TAB -->
+    <!-- TAB 2: SUBJEK (DIBAIKI BUTANG KEMBALI) -->
     <section id="tab-subjects" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
           <span>📚</span> Pilihan Subjek
         </h2>
-        <button onclick="showTab('home')" class="bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-full font-bold text-slate-700 text-sm">
-          ← Kembali
+        <!-- FIX 1: BUTANG KEMBALI KE HOME -->
+        <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
+          ← Kembali Utama
         </button>
       </div>
 
+      <!-- FIX 2: SUBJEK DENGAN ITEM KANDUNGAN YANG BETUL -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Subjek 1: Bahasa Melayu -->
-        <div onclick="selectSubject('bm')" class="bg-white p-4 rounded-2xl shadow-md border-4 border-red-200 hover:border-red-400 cursor-pointer transition flex items-center gap-4">
+        <!-- BM -->
+        <div onclick="startSubjectTopic('bm')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-red-200 hover:border-red-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🔴</div>
           <div>
-            <h3 class="text-lg font-bold text-red-600">Bahasa Melayu</h3>
-            <p class="text-xs text-slate-500">Huruf A-Z, Vokal, Suku kata & Perkataan</p>
+            <h3 class="text-xl font-bold text-red-600">Bahasa Melayu</h3>
+            <p class="text-xs text-slate-500">Kenal Huruf A-Z, Suku Kata & Perkataan</p>
           </div>
         </div>
 
-        <!-- Subjek 2: Matematik Awal -->
-        <div onclick="selectSubject('math')" class="bg-white p-4 rounded-2xl shadow-md border-4 border-blue-200 hover:border-blue-400 cursor-pointer transition flex items-center gap-4">
+        <!-- Matematik -->
+        <div onclick="startSubjectTopic('math')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-blue-200 hover:border-blue-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🔢</div>
           <div>
-            <h3 class="text-lg font-bold text-blue-600">Matematik Awal</h3>
-            <p class="text-xs text-slate-500">Nombor 1-20, Mengira, Tambah & Tolak</p>
+            <h3 class="text-xl font-bold text-blue-600">Matematik Awal</h3>
+            <p class="text-xs text-slate-500">Nombor 1-20, Mengira Objek & Tambah Mudah</p>
           </div>
         </div>
 
-        <!-- Subjek 3: Bahasa Inggeris -->
-        <div onclick="selectSubject('english')" class="bg-white p-4 rounded-2xl shadow-md border-4 border-amber-200 hover:border-amber-400 cursor-pointer transition flex items-center gap-4">
+        <!-- English -->
+        <div onclick="startSubjectTopic('english')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-amber-200 hover:border-amber-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🔤</div>
           <div>
-            <h3 class="text-lg font-bold text-amber-600">Bahasa Inggeris</h3>
-            <p class="text-xs text-slate-500">ABC, Colours, Animals & Words</p>
+            <h3 class="text-xl font-bold text-amber-600">Bahasa Inggeris</h3>
+            <p class="text-xs text-slate-500">ABC, Colours, Animals & Easy Words</p>
           </div>
         </div>
 
-        <!-- Subjek 4: Sains Awal -->
-        <div onclick="selectSubject('science')" class="bg-white p-4 rounded-2xl shadow-md border-4 border-emerald-200 hover:border-emerald-400 cursor-pointer transition flex items-center gap-4">
+        <!-- Sains Awal -->
+        <div onclick="startSubjectTopic('science')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-emerald-200 hover:border-emerald-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🌱</div>
           <div>
-            <h3 class="text-lg font-bold text-emerald-600">Sains Awal</h3>
-            <p class="text-xs text-slate-500">Haiwan, Tumbuhan, Badan & Cuaca</p>
+            <h3 class="text-xl font-bold text-emerald-600">Sains Awal</h3>
+            <p class="text-xs text-slate-500">Haiwan, Tumbuhan, Anggota Badan & Cuaca</p>
           </div>
         </div>
 
-        <!-- Subjek 5: Pendidikan Islam / Nilai Murni -->
-        <div onclick="selectSubject('islamic')" class="bg-white p-4 rounded-2xl shadow-md border-4 border-teal-200 hover:border-teal-400 cursor-pointer transition flex items-center gap-4">
+        <!-- Pendidikan Islam / Nilai Murni -->
+        <div onclick="startSubjectTopic('islamic')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-teal-200 hover:border-teal-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🌙</div>
           <div>
-            <h3 class="text-lg font-bold text-teal-600">Pendidikan Islam & Nilai</h3>
-            <p class="text-xs text-slate-500">Adab harian, Hormat & Amalan baik</p>
+            <h3 class="text-xl font-bold text-teal-600">Pendidikan Islam / Nilai</h3>
+            <p class="text-xs text-slate-500">Adab Harian, Ucapan Salam & Hormat</p>
           </div>
         </div>
 
-        <!-- Subjek 6: Kreativiti -->
-        <div onclick="showTab('creativity')" class="bg-white p-4 rounded-2xl shadow-md border-4 border-purple-200 hover:border-purple-400 cursor-pointer transition flex items-center gap-4">
+        <!-- Kreativiti -->
+        <div onclick="showTab('creativity')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-purple-200 hover:border-purple-400 cursor-pointer transition flex items-center gap-4 active:scale-95">
           <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-4xl shadow-inner">🎨</div>
           <div>
-            <h3 class="text-lg font-bold text-purple-600">Kreativiti & Seni</h3>
-            <p class="text-xs text-slate-500">Mewarna, Melukis & Susun Bentuk</p>
+            <h3 class="text-xl font-bold text-purple-600">Kreativiti & Seni</h3>
+            <p class="text-xs text-slate-500">Mewarna, Melukis & Bebas Berkarya</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- GAMES HUB TAB -->
+    <!-- TAB 3: GAMES HUB -->
     <section id="tab-games" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
           <span>🎮</span> Pusat Permainan
         </h2>
-        <button onclick="showTab('home')" class="bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-full font-bold text-slate-700 text-sm">
-          ← Kembali
+        <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
+          ← Kembali Utama
         </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Game 1: Cari Huruf -->
-        <div onclick="startGame('game_letter')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-orange-300 hover:border-orange-500 cursor-pointer transition flex flex-col justify-between">
+        <div onclick="startSubjectTopic('bm')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-orange-300 hover:border-orange-500 cursor-pointer transition flex flex-col justify-between">
           <div class="flex items-center gap-3">
             <span class="text-5xl">🔤</span>
             <div>
@@ -251,172 +223,125 @@
           <button class="mt-4 bg-orange-500 text-white font-bold py-2 rounded-2xl shadow">Main Sekarang →</button>
         </div>
 
-        <!-- Game 2: Kira Buah -->
-        <div onclick="startGame('game_count')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-green-300 hover:border-green-500 cursor-pointer transition flex flex-col justify-between">
+        <div onclick="startSubjectTopic('math')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-green-300 hover:border-green-500 cursor-pointer transition flex flex-col justify-between">
           <div class="flex items-center gap-3">
             <span class="text-5xl">🍎</span>
             <div>
               <h3 class="text-xl font-bold text-green-600">Kira Buah-Buahan</h3>
-              <p class="text-xs text-slate-500">Kira bilangan buah dalam kotak!</p>
+              <p class="text-xs text-slate-500">Kira bilangan objek dalam kotak!</p>
             </div>
           </div>
           <button class="mt-4 bg-green-500 text-white font-bold py-2 rounded-2xl shadow">Main Sekarang →</button>
         </div>
-
-        <!-- Game 3: Padankan Warna -->
-        <div onclick="startGame('game_color')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-purple-300 hover:border-purple-500 cursor-pointer transition flex flex-col justify-between">
-          <div class="flex items-center gap-3">
-            <span class="text-5xl">🎨</span>
-            <div>
-              <h3 class="text-xl font-bold text-purple-600">Padankan Warna</h3>
-              <p class="text-xs text-slate-500">Kenal pasti warna objek dengan betul!</p>
-            </div>
-          </div>
-          <button class="mt-4 bg-purple-500 text-white font-bold py-2 rounded-2xl shadow">Main Sekarang →</button>
-        </div>
-
-        <!-- Game 4: Susun Perkataan -->
-        <div onclick="startGame('game_word')" class="bg-white p-5 rounded-3xl shadow-md border-4 border-blue-300 hover:border-blue-500 cursor-pointer transition flex flex-col justify-between">
-          <div class="flex items-center gap-3">
-            <span class="text-5xl">🧩</span>
-            <div>
-              <h3 class="text-xl font-bold text-blue-600">Susun Huruf</h3>
-              <p class="text-xs text-slate-500">Susun huruf menjadi perkataan bermakna!</p>
-            </div>
-          </div>
-          <button class="mt-4 bg-blue-500 text-white font-bold py-2 rounded-2xl shadow">Main Sekarang →</button>
-        </div>
       </div>
     </section>
 
-    <!-- ACTIVE PLAY SCREEN (GAME ENGINE) -->
+    <!-- ACTIVE PLAY SCREEN -->
     <section id="tab-play" class="tab-content hidden space-y-4">
-      <!-- Game Top Bar -->
       <div class="flex items-center justify-between bg-white/80 p-3 rounded-2xl shadow-sm border border-slate-200">
-        <button onclick="showTab('games')" class="bg-red-400 hover:bg-red-500 text-white px-3 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1">
+        <button onclick="showTab('subjects')" class="bg-red-400 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl text-sm font-bold flex items-center gap-1 shadow">
           ✖ Keluar
         </button>
-        <div id="game-title-display" class="font-bold text-indigo-700 text-lg">Permainan Interaktif</div>
+        <div id="game-title-display" class="font-bold text-indigo-700 text-lg">Subjek Pembelajaran</div>
         <div class="text-amber-500 font-bold flex items-center gap-1">
           ⭐ +<span id="game-score-gain">10</span>
         </div>
       </div>
 
-      <!-- Main Game Card Frame -->
       <div class="bg-white rounded-3xl p-6 shadow-2xl border-4 border-amber-300 min-h-[360px] flex flex-col justify-between relative overflow-hidden">
-        <!-- Biko Assistant Header inside Game -->
         <div class="flex items-center gap-3 bg-amber-50 p-3 rounded-2xl border border-amber-200">
           <div class="text-3xl bouncy">🐥</div>
-          <p id="game-biko-instruction" class="text-amber-900 font-semibold text-base sm:text-lg">Arahan permainan akan terpapar di sini.</p>
+          <p id="game-biko-instruction" class="text-amber-900 font-semibold text-base sm:text-lg">Arahan soalan...</p>
           <button onclick="repeatInstruction()" class="ml-auto bg-amber-400 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow">
             🔊
           </button>
         </div>
 
-        <!-- Dynamic Game Content Container -->
         <div id="game-dynamic-content" class="my-6 flex flex-col items-center justify-center flex-grow">
-          <!-- Injected via JavaScript -->
+          <!-- Dynamic Content -->
         </div>
 
-        <!-- Feedback / Mascot Toast Footer -->
         <div id="game-feedback-area" class="h-10 text-center font-bold text-xl flex items-center justify-center">
-          <!-- Feedback messages like "Bagus sekali!" appear here -->
         </div>
       </div>
     </section>
 
-    <!-- CREATIVITY TAB (MEWARNA & LUKIS) -->
+    <!-- TAB: CREATIVITY -->
     <section id="tab-creativity" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
           <span>🎨</span> Studio Mewarna & Lukis
         </h2>
-        <button onclick="showTab('home')" class="bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-full font-bold text-slate-700 text-sm">
-          ← Kembali
+        <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
+          ← Kembali Utama
         </button>
       </div>
 
       <div class="bg-white p-4 rounded-3xl shadow-xl border-4 border-pink-300 flex flex-col items-center gap-4">
-        <!-- Canvas Canvas -->
         <canvas id="paintCanvas" class="bg-slate-50 border-2 border-indigo-200 rounded-2xl cursor-crosshair touch-none shadow-inner w-full max-w-lg h-72 md:h-80"></canvas>
 
-        <!-- Color Palette & Tools -->
         <div class="flex flex-wrap items-center justify-center gap-3 w-full">
-          <!-- Palette Buttons -->
           <div class="flex gap-2 bg-slate-100 p-2 rounded-full border border-slate-200">
-            <button onclick="setPaintColor('#EF4444')" class="w-8 h-8 rounded-full bg-red-500 border-2 border-white shadow focus:scale-110 transition"></button>
-            <button onclick="setPaintColor('#3B82F6')" class="w-8 h-8 rounded-full bg-blue-500 border-2 border-white shadow focus:scale-110 transition"></button>
-            <button onclick="setPaintColor('#10B981')" class="w-8 h-8 rounded-full bg-emerald-500 border-2 border-white shadow focus:scale-110 transition"></button>
-            <button onclick="setPaintColor('#F59E0B')" class="w-8 h-8 rounded-full bg-amber-500 border-2 border-white shadow focus:scale-110 transition"></button>
-            <button onclick="setPaintColor('#8B5CF6')" class="w-8 h-8 rounded-full bg-purple-500 border-2 border-white shadow focus:scale-110 transition"></button>
-            <button onclick="setPaintColor('#000000')" class="w-8 h-8 rounded-full bg-black border-2 border-white shadow focus:scale-110 transition"></button>
+            <button onclick="setPaintColor('#EF4444')" class="w-8 h-8 rounded-full bg-red-500 border-2 border-white shadow"></button>
+            <button onclick="setPaintColor('#3B82F6')" class="w-8 h-8 rounded-full bg-blue-500 border-2 border-white shadow"></button>
+            <button onclick="setPaintColor('#10B981')" class="w-8 h-8 rounded-full bg-emerald-500 border-2 border-white shadow"></button>
+            <button onclick="setPaintColor('#F59E0B')" class="w-8 h-8 rounded-full bg-amber-500 border-2 border-white shadow"></button>
+            <button onclick="setPaintColor('#8B5CF6')" class="w-8 h-8 rounded-full bg-purple-500 border-2 border-white shadow"></button>
+            <button onclick="setPaintColor('#000000')" class="w-8 h-8 rounded-full bg-black border-2 border-white shadow"></button>
           </div>
 
-          <!-- Eraser & Clear -->
-          <button onclick="setPaintColor('#FAFAFA')" class="bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-full text-sm font-bold text-slate-700 flex items-center gap-1 shadow">
+          <button onclick="setPaintColor('#FAFAFA')" class="bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-full text-sm font-bold text-slate-700 shadow">
             🧹 Pemadam
           </button>
-          <button onclick="clearCanvas()" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-full text-sm font-bold flex items-center gap-1 shadow">
+          <button onclick="clearCanvas()" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-full text-sm font-bold shadow">
             🗑️ Bersihkan
           </button>
         </div>
       </div>
     </section>
 
-    <!-- ACHIEVEMENTS TAB -->
+    <!-- TAB: ACHIEVEMENTS -->
     <section id="tab-achievements" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-indigo-800 flex items-center gap-2">
           <span>🏆</span> Galeri Pencapaian
         </h2>
-        <button onclick="showTab('home')" class="bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-full font-bold text-slate-700 text-sm">
-          ← Kembali
+        <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
+          ← Kembali Utama
         </button>
       </div>
 
-      <!-- Badges Grid -->
       <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-indigo-200 space-y-4">
         <h3 class="font-bold text-lg text-indigo-900 border-b pb-2">Lencana Terkumpul</h3>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          <!-- Badge 1 -->
           <div id="badge-1" class="p-4 rounded-2xl bg-slate-100 opacity-50 border-2 border-slate-200 flex flex-col items-center">
             <div class="text-4xl mb-1">🌟</div>
             <div class="font-bold text-xs text-slate-800">Penjelajah Muda</div>
-            <div class="text-[10px] text-slate-500 mt-1">Selesaikan 1 Permainan</div>
           </div>
-
-          <!-- Badge 2 -->
           <div id="badge-2" class="p-4 rounded-2xl bg-slate-100 opacity-50 border-2 border-slate-200 flex flex-col items-center">
             <div class="text-4xl mb-1">🍎</div>
             <div class="font-bold text-xs text-slate-800">Pakar Nombor</div>
-            <div class="text-[10px] text-slate-500 mt-1">Kumpul 50 Bintang</div>
           </div>
-
-          <!-- Badge 3 -->
           <div id="badge-3" class="p-4 rounded-2xl bg-slate-100 opacity-50 border-2 border-slate-200 flex flex-col items-center">
             <div class="text-4xl mb-1">🔤</div>
             <div class="font-bold text-xs text-slate-800">Juara Huruf</div>
-            <div class="text-[10px] text-slate-500 mt-1">Kumpul 100 Bintang</div>
           </div>
-
-          <!-- Badge 4 -->
           <div id="badge-4" class="p-4 rounded-2xl bg-slate-100 opacity-50 border-2 border-slate-200 flex flex-col items-center">
             <div class="text-4xl mb-1">👑</div>
             <div class="font-bold text-xs text-slate-800">Mutiara Bijak</div>
-            <div class="text-[10px] text-slate-500 mt-1">Capai Level 5</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PARENTS DASHBOARD TAB -->
+    <!-- TAB: PARENTS -->
     <section id="tab-parents" class="tab-content hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-          <span>👨‍👩‍👧</span> Mod Ibu Bapa & Dashboard
+          <span>👨‍👩‍👧</span> Mod Ibu Bapa
         </h2>
-        <button onclick="showTab('home')" class="bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-full font-bold text-slate-700 text-sm">
-          ← Kembali
+        <button onclick="showTab('home')" class="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold px-5 py-2 rounded-full shadow-md border-b-4 border-amber-600 active:scale-95 transition">
+          ← Kembali Utama
         </button>
       </div>
 
@@ -424,72 +349,29 @@
         <div class="flex items-center justify-between border-b pb-4">
           <div>
             <h3 class="text-xl font-bold text-slate-800">Ringkasan Kemajuan Anak</h3>
-            <p class="text-xs text-slate-500">Data terpelihara dan disimpan secara selamat.</p>
+            <p class="text-xs text-slate-500">Data tersimpan secara selamat.</p>
           </div>
           <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300">
             🟢 Firebase Aktif
           </span>
         </div>
 
-        <!-- Metrics Cards -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
-            <span class="text-xs text-slate-500 font-bold uppercase">Masa Belajar</span>
-            <div class="text-2xl font-bold text-indigo-600 mt-1"><span id="parent-time">0</span> Minit</div>
+          <div class="bg-slate-50 p-4 rounded-2xl border text-center">
+            <span class="text-xs text-slate-500 font-bold">Masa Belajar</span>
+            <div class="text-2xl font-bold text-indigo-600 mt-1"><span id="parent-time">5</span> Minit</div>
           </div>
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
-            <span class="text-xs text-slate-500 font-bold uppercase">Jumlah Bintang</span>
+          <div class="bg-slate-50 p-4 rounded-2xl border text-center">
+            <span class="text-xs text-slate-500 font-bold">Jumlah Bintang</span>
             <div class="text-2xl font-bold text-amber-500 mt-1"><span id="parent-stars">0</span> ⭐</div>
           </div>
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
-            <span class="text-xs text-slate-500 font-bold uppercase">Tahap (Level)</span>
+          <div class="bg-slate-50 p-4 rounded-2xl border text-center">
+            <span class="text-xs text-slate-500 font-bold">Tahap (Level)</span>
             <div class="text-2xl font-bold text-emerald-600 mt-1">Tahap <span id="parent-level">1</span></div>
           </div>
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
-            <span class="text-xs text-slate-500 font-bold uppercase">Ketetapan Streak</span>
+          <div class="bg-slate-50 p-4 rounded-2xl border text-center">
+            <span class="text-xs text-slate-500 font-bold">Ketetapan</span>
             <div class="text-2xl font-bold text-red-500 mt-1"><span id="parent-streak">1</span> Hari</div>
-          </div>
-        </div>
-
-        <!-- Learning Analytics -->
-        <div class="space-y-3">
-          <h4 class="font-bold text-slate-700 text-sm">Kekuatan Pembelajaran Subjek</h4>
-          <div class="space-y-2">
-            <div>
-              <div class="flex justify-between text-xs font-bold mb-1">
-                <span>Bahasa Melayu & Inggeris</span>
-                <span id="prog-bm-text">80%</span>
-              </div>
-              <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
-                <div id="prog-bm-bar" class="bg-red-500 h-3 rounded-full" style="width: 80%"></div>
-              </div>
-            </div>
-            <div>
-              <div class="flex justify-between text-xs font-bold mb-1">
-                <span>Matematik Awal</span>
-                <span id="prog-math-text">65%</span>
-              </div>
-              <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
-                <div id="prog-math-bar" class="bg-blue-500 h-3 rounded-full" style="width: 65%"></div>
-              </div>
-            </div>
-            <div>
-              <div class="flex justify-between text-xs font-bold mb-1">
-                <span>Sains & Nilai Murni</span>
-                <span id="prog-sci-text">90%</span>
-              </div>
-              <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
-                <div id="prog-sci-bar" class="bg-emerald-500 h-3 rounded-full" style="width: 90%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs text-amber-900 flex items-start gap-3">
-          <span class="text-2xl">💡</span>
-          <div>
-            <strong>Saranan Biko untuk Ibu Bapa:</strong>
-            <p class="mt-0.5">Anak anda sangat aktif dalam mengenali abjad dan warna! Berikan pujian tambahan untuk mengekalkan motivasi belajar mereka.</p>
           </div>
         </div>
       </div>
@@ -497,12 +379,12 @@
 
   </main>
 
-  <!-- REWARD CELEBRATION MODAL OVERLAY -->
+  <!-- REWARD MODAL -->
   <div id="reward-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full text-center space-y-4 border-4 border-amber-400 shadow-2xl transform transition-all scale-95 animate-bounce-once">
+    <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full text-center space-y-4 border-4 border-amber-400 shadow-2xl">
       <div class="text-6xl bouncy">🎉</div>
       <h3 class="text-2xl font-bold text-amber-500">TAHNIAH, BIJAK!</h3>
-      <p class="text-slate-600 text-sm" id="modal-subtext">Kamu berjaya menyelesaikan soalan ini dengan sangat hebat!</p>
+      <p class="text-slate-600 text-sm" id="modal-subtext">Jawapan anda tepat sekali!</p>
       
       <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 flex justify-around">
         <div>
@@ -516,43 +398,40 @@
         </div>
       </div>
 
-      <button onclick="closeRewardModal()" class="w-full bg-gradient-to-r from-emerald-400 to-emerald-600 hover:from-emerald-500 hover:to-emerald-700 text-white font-bold py-3 rounded-2xl shadow-lg border-b-4 border-emerald-800 transition active:scale-95 text-lg">
+      <button onclick="closeRewardModal()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-2xl shadow-lg active:scale-95 text-lg">
         TERUSKAN BELAJAR 🚀
       </button>
     </div>
   </div>
 
-  <!-- BOTTOM NAVIGATION BAR FOR MOBILE -->
+  <!-- NAVIGATION BOTTOM BAR -->
   <nav class="bg-white/90 backdrop-blur border-t-2 border-indigo-100 p-2 sticky bottom-0 z-40">
     <div class="max-w-md mx-auto flex justify-around items-center">
-      <button onclick="showTab('home')" class="flex flex-col items-center text-indigo-600 hover:text-indigo-800">
+      <button onclick="showTab('home')" class="flex flex-col items-center text-indigo-600">
         <span class="text-xl">🏠</span>
         <span class="text-[10px] font-bold">UTAMA</span>
       </button>
-      <button onclick="showTab('subjects')" class="flex flex-col items-center text-indigo-600 hover:text-indigo-800">
+      <button onclick="showTab('subjects')" class="flex flex-col items-center text-indigo-600">
         <span class="text-xl">📚</span>
         <span class="text-[10px] font-bold">SUBJEK</span>
       </button>
-      <button onclick="showTab('games')" class="flex flex-col items-center text-indigo-600 hover:text-indigo-800">
+      <button onclick="showTab('games')" class="flex flex-col items-center text-indigo-600">
         <span class="text-xl">🎮</span>
         <span class="text-[10px] font-bold">PERMAINAN</span>
       </button>
-      <button onclick="showTab('creativity')" class="flex flex-col items-center text-indigo-600 hover:text-indigo-800">
+      <button onclick="showTab('creativity')" class="flex flex-col items-center text-indigo-600">
         <span class="text-xl">🎨</span>
         <span class="text-[10px] font-bold">KREATIVITI</span>
       </button>
-      <button onclick="showTab('achievements')" class="flex flex-col items-center text-indigo-600 hover:text-indigo-800">
+      <button onclick="showTab('achievements')" class="flex flex-col items-center text-indigo-600">
         <span class="text-xl">🏆</span>
         <span class="text-[10px] font-bold">GANJARAN</span>
       </button>
     </div>
   </nav>
 
-  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <!-- JAVASCRIPT ENGINE -->
   <script>
-    // ==========================================
-    // 1. FIREBASE CONFIGURATION & INITIALIZATION
-    // ==========================================
     const firebaseConfig = {
       apiKey: "AIzaSyDczzfjllLDnwtHeZ4KC8ue22piSJkIrLM",
       authDomain: "kids-pintar.firebaseapp.com",
@@ -564,15 +443,11 @@
       measurementId: "G-RJ75DSLH94"
     };
 
-    // Initialize Firebase
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
     const db = firebase.database();
 
-    // ==========================================
-    // 2. GLOBAL STATE & USER PROGRESS
-    // ==========================================
     let state = {
       stars: 0,
       points: 0,
@@ -580,25 +455,13 @@
       streak: 1,
       minutesLearned: 5,
       audioMuted: false,
-      completedGamesCount: 0,
-      activeSubject: 'bm',
-      badges: {
-        badge1: false,
-        badge2: false,
-        badge3: false,
-        badge4: false
-      }
+      completedGamesCount: 0
     };
 
-    // Load progress from LocalStorage on start
     function loadSavedState() {
       const saved = localStorage.getItem('kids_pintar_state');
       if (saved) {
-        try {
-          state = JSON.parse(saved);
-        } catch(e) {
-          console.error("Gagal membaca LocalStorage", e);
-        }
+        try { state = JSON.parse(saved); } catch(e){}
       }
       updateUIStats();
     }
@@ -606,8 +469,6 @@
     function saveState() {
       localStorage.setItem('kids_pintar_state', JSON.stringify(state));
       updateUIStats();
-      
-      // Sync with Firebase Realtime Database
       try {
         db.ref('users/child_guest_1').set({
           stars: state.stars,
@@ -617,57 +478,28 @@
           minutesLearned: state.minutesLearned,
           lastUpdated: new Date().toISOString()
         });
-      } catch (err) {
-        console.warn("Firebase Sync Warning:", err);
-      }
+      } catch (err) {}
     }
 
     function updateUIStats() {
       document.getElementById('stat-stars').innerText = state.stars;
       document.getElementById('stat-level').innerText = state.level;
       document.getElementById('stat-streak').innerText = state.streak;
-
-      // Update Parents view
       document.getElementById('parent-stars').innerText = state.stars;
       document.getElementById('parent-level').innerText = state.level;
       document.getElementById('parent-streak').innerText = state.streak;
       document.getElementById('parent-time').innerText = state.minutesLearned;
-
-      // Update Badges Visuals
-      if (state.completedGamesCount >= 1) unlockBadge('badge-1');
-      if (state.stars >= 50) unlockBadge('badge-2');
-      if (state.stars >= 100) unlockBadge('badge-3');
-      if (state.level >= 5) unlockBadge('badge-4');
     }
 
-    function unlockBadge(id) {
-      const el = document.getElementById(id);
-      if (el) {
-        el.classList.remove('opacity-50', 'bg-slate-100');
-        el.classList.add('bg-amber-100', 'border-amber-400', 'shadow-md');
-      }
-    }
-
-    // Timer to track time spent learning
-    setInterval(() => {
-      state.minutesLearned += 1;
-      saveState();
-    }, 60000);
-
-    // ==========================================
-    // 3. AUDIO & SPEECH SYNTHESIS ENGINE (BM)
-    // ==========================================
     function speakBiko(text) {
       if (state.audioMuted) return;
-
       document.getElementById('biko-speech').innerText = text;
-
       if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // Stop current speaking
+        window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ms-MY';
-        utterance.rate = 0.9; // Slightly slower for kindergarten children
-        utterance.pitch = 1.2; // Cheerful voice tone
+        utterance.rate = 0.9;
+        utterance.pitch = 1.2;
         window.speechSynthesis.speak(utterance);
       }
     }
@@ -676,19 +508,17 @@
       state.audioMuted = !state.audioMuted;
       const btn = document.getElementById('btn-audio');
       if (state.audioMuted) {
-        btn.className = "w-10 h-10 rounded-full bg-slate-400 hover:bg-slate-500 text-white font-bold flex items-center justify-center shadow-md transition-all active:scale-95";
+        btn.className = "w-10 h-10 rounded-full bg-slate-400 text-white font-bold flex items-center justify-center shadow-md";
         btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
         window.speechSynthesis.cancel();
       } else {
-        btn.className = "w-10 h-10 rounded-full bg-emerald-400 hover:bg-emerald-500 text-white font-bold flex items-center justify-center shadow-md transition-all active:scale-95";
+        btn.className = "w-10 h-10 rounded-full bg-emerald-400 text-white font-bold flex items-center justify-center shadow-md";
         btn.innerHTML = '<i class="fas fa-volume-up"></i>';
         speakBiko("Bunyi dihidupkan!");
       }
     }
 
-    // ==========================================
-    // 4. NAVIGATION TAB SYSTEM
-    // ==========================================
+    // UTAMA FUNCTION SHOW TAB (MEMBAIKI NAVIGASI)
     function showTab(tabId) {
       const tabs = document.querySelectorAll('.tab-content');
       tabs.forEach(tab => tab.classList.add('hidden'));
@@ -699,297 +529,138 @@
       }
 
       if (tabId === 'home') {
-        speakBiko("Selamat kembali! Jom pilih aktiviti menyeronokkan!");
+        speakBiko("Selamat kembali ke laman utama!");
+      } else if (tabId === 'subjects') {
+        speakBiko("Pilih subjek yang kamu mahu belajar!");
       } else if (tabId === 'creativity') {
         initCanvas();
-        speakBiko("Mari mewarna dan melukis bersama Biko!");
+        speakBiko("Mari lukis dan mewarna!");
       }
     }
 
-    // ==========================================
-    // 5. GAME ENGINE & DATABASE ACTIVITIES
-    // ==========================================
-    let currentQuestionData = null;
-
-    const gameQuestions = {
-      game_letter: [
-        {
-          instruction: "Cari huruf awal bagi gambar AYAM!",
-          image: "🐓",
-          options: ["A", "B", "C"],
-          answer: "A"
-        },
-        {
-          instruction: "Cari huruf awal bagi gambar BUKU!",
-          image: "📚",
-          options: ["K", "B", "D"],
-          answer: "B"
-        },
-        {
-          instruction: "Cari huruf awal bagi gambar CICAK!",
-          image: "🦎",
-          options: ["S", "M", "C"],
-          answer: "C"
-        }
+    // BANK SOALAN MENGIKUT SUBJEK YANG BETUL
+    const subjectQuestions = {
+      bm: [
+        { title: "Bahasa Melayu", instruction: "Cari huruf awal bagi gambar AYAM!", image: "🐓", options: ["A", "B", "C"], answer: "A" },
+        { title: "Bahasa Melayu", instruction: "Cari huruf awal bagi gambar BUKU!", image: "📚", options: ["K", "B", "D"], answer: "B" }
       ],
-      game_count: [
-        {
-          instruction: "Berapa biji epal di bawah?",
-          image: "🍎 🍎 🍎 🍎 🍎",
-          options: ["3", "5", "7"],
-          answer: "5"
-        },
-        {
-          instruction: "Kira berapa ekor kucing ini!",
-          image: "🐱 🐱 🐱",
-          options: ["2", "3", "4"],
-          answer: "3"
-        }
+      math: [
+        { title: "Matematik Awal", instruction: "Berapa biji epal di bawah?", image: "🍎 🍎 🍎 🍎 🍎", options: ["3", "5", "7"], answer: "5" },
+        { title: "Matematik Awal", instruction: "Kira berapa ekor kucing ini!", image: "🐱 🐱 🐱", options: ["2", "3", "4"], answer: "3" }
       ],
-      game_color: [
-        {
-          instruction: "Apakah warna bagi pisang ini?",
-          image: "🍌",
-          options: ["Merah", "Kuning", "Biru"],
-          answer: "Kuning"
-        },
-        {
-          instruction: "Apakah warna daun ini?",
-          image: "🍃",
-          options: ["Hijau", "Ungu", "Hitam"],
-          answer: "Hijau"
-        }
+      english: [
+        { title: "Bahasa Inggeris", instruction: "What animal is this?", image: "🐶", options: ["Cat", "Dog", "Bird"], answer: "Dog" },
+        { title: "Bahasa Inggeris", instruction: "What colour is this banana?", image: "🍌", options: ["Yellow", "Red", "Blue"], answer: "Yellow" }
       ],
-      game_word: [
-        {
-          instruction: "Susun huruf menjadi perkataan BUKU!",
-          letters: ["K", "U", "B", "U"],
-          answer: "BUKU"
-        }
+      science: [
+        { title: "Sains Awal", instruction: "Manakah objek hidup?", image: "🌱 🆚 🪨", options: ["Tumbuhan", "Batu", "Kerusi"], answer: "Tumbuhan" },
+        { title: "Sains Awal", instruction: "Apakah cuaca di dalam gambar ini?", image: "🌧️", options: ["Hujan", "Panas", "Angin"], answer: "Hujan" }
+      ],
+      islamic: [
+        { title: "Pendidikan Islam", instruction: "Apakah ucapan salam apabila bertemu kawan?", image: "🤝", options: ["Assalamu'alaikum", "Selamat Pagi", "Terima Kasih"], answer: "Assalamu'alaikum" },
+        { title: "Pendidikan Islam", instruction: "Sebelum makan kita perlu membaca?", image: "🍽️", options: ["Doa Makan", "Doa Tidur", "Niat Puasa"], answer: "Doa Makan" }
       ]
     };
 
-    function startGame(gameType) {
-      showTab('play');
-      const questions = gameQuestions[gameType] || gameQuestions.game_letter;
-      currentQuestionData = questions[Math.floor(Math.random() * questions.length)];
+    let currentQuestion = null;
 
-      document.getElementById('game-title-display').innerText = "Cabaran Bijak";
-      document.getElementById('game-biko-instruction').innerText = currentQuestionData.instruction;
-      speakBiko(currentQuestionData.instruction);
+    function startSubjectTopic(subjKey) {
+      showTab('play');
+      const qList = subjectQuestions[subjKey] || subjectQuestions.bm;
+      currentQuestion = qList[Math.floor(Math.random() * qList.length)];
+
+      document.getElementById('game-title-display').innerText = currentQuestion.title;
+      document.getElementById('game-biko-instruction').innerText = currentQuestion.instruction;
+      speakBiko(currentQuestion.instruction);
 
       const contentBox = document.getElementById('game-dynamic-content');
-      contentBox.innerHTML = '';
-
-      if (gameType === 'game_letter' || gameType === 'game_count' || gameType === 'game_color') {
-        contentBox.innerHTML = `
-          <div class="text-7xl md:text-8xl my-4 bouncy">${currentQuestionData.image}</div>
-          <div class="grid grid-cols-3 gap-4 w-full max-w-sm mt-4">
-            ${currentQuestionData.options.map(opt => `
-              <button onclick="checkAnswer('${opt}')" class="bg-gradient-to-b from-amber-300 to-amber-400 hover:from-amber-400 hover:to-amber-500 border-b-4 border-amber-600 text-indigo-900 font-bold text-2xl py-4 rounded-2xl shadow-lg active:scale-95 transition">
-                ${opt}
-              </button>
-            `).join('')}
-          </div>
-        `;
-      } else if (gameType === 'game_word') {
-        contentBox.innerHTML = `
-          <div class="text-5xl my-4 font-bold text-indigo-800 tracking-widest bg-amber-100 px-6 py-3 rounded-2xl border-2 border-amber-300 shadow-inner">
-            ? ? ? ?
-          </div>
-          <p class="text-sm text-slate-500 mb-2">Tekan huruf mengikut susunan betul:</p>
-          <div id="word-builder-options" class="flex gap-3">
-            ${currentQuestionData.letters.map((lettr, idx) => `
-              <button onclick="appendLetter('${lettr}', this)" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold text-2xl w-14 h-14 rounded-2xl shadow-lg active:scale-95 transition">
-                ${lettr}
-              </button>
-            `).join('')}
-          </div>
-        `;
-        wordConstruct = "";
-      }
+      contentBox.innerHTML = `
+        <div class="text-7xl md:text-8xl my-4 bouncy">${currentQuestion.image}</div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-md mt-4">
+          ${currentQuestion.options.map(opt => `
+            <button onclick="checkSubjectAnswer('${opt}')" class="bg-gradient-to-b from-amber-300 to-amber-400 hover:from-amber-400 border-b-4 border-amber-600 text-indigo-900 font-bold text-xl py-3 px-2 rounded-2xl shadow active:scale-95 transition">
+              ${opt}
+            </button>
+          `).join('')}
+        </div>
+      `;
     }
 
-    let wordConstruct = "";
-    function appendLetter(letter, btnEl) {
-      wordConstruct += letter;
-      btnEl.disabled = true;
-      btnEl.classList.add('opacity-30');
-      
-      if (wordConstruct.length === currentQuestionData.answer.length) {
-        if (wordConstruct === currentQuestionData.answer) {
-          triggerSuccess();
-        } else {
-          speakBiko("Cuba lagi! Susun semula huruf ya.");
-          setTimeout(() => {
-            startGame('game_word');
-          }, 1500);
-        }
-      }
-    }
+    function checkSubjectAnswer(selected) {
+      if (selected === currentQuestion.answer) {
+        document.getElementById('game-feedback-area').innerHTML = `<span class="text-emerald-600 font-bold">🎉 Syabas, Betul!</span>`;
+        speakBiko("Bagus sekali! Jawapan kamu tepat!");
 
-    function checkAnswer(selected) {
-      if (selected === currentQuestionData.answer) {
-        triggerSuccess();
+        confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
+
+        state.stars += 10;
+        state.points += 50;
+        saveState();
+
+        setTimeout(() => {
+          document.getElementById('reward-modal').classList.remove('hidden');
+        }, 800);
       } else {
-        const wrongFeedbacks = [
-          "Cuba lagi, kamu hampir berjaya!",
-          "Tidak mengapa, mari cuba sekali lagi!",
-          "Biko tahu kamu boleh buat! Cuba lagi."
-        ];
-        const randomFB = wrongFeedbacks[Math.floor(Math.random() * wrongFeedbacks.length)];
-        document.getElementById('game-feedback-area').innerHTML = `<span class="text-amber-600">${randomFB}</span>`;
-        speakBiko(randomFB);
+        document.getElementById('game-feedback-area').innerHTML = `<span class="text-amber-600">Cuba lagi, kamu hampir berjaya!</span>`;
+        speakBiko("Cuba lagi, kamu pasti boleh!");
       }
-    }
-
-    function triggerSuccess() {
-      const positivePraising = ["Hebat!", "Bagus sekali!", "Syabas, Bijak Edukids!", "Kamun mmg genius!"];
-      const randomPraise = positivePraising[Math.floor(Math.random() * positivePraising.length)];
-      
-      document.getElementById('game-feedback-area').innerHTML = `<span class="text-emerald-600 font-bold">🎉 ${randomPraise}</span>`;
-      speakBiko(randomPraise);
-
-      // Confetti Effect
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-
-      // Update State Gamification
-      state.stars += 10;
-      state.points += 50;
-      state.completedGamesCount += 1;
-      
-      if (state.stars >= state.level * 30) {
-        state.level += 1;
-      }
-      
-      saveState();
-
-      // Show Reward Modal
-      setTimeout(() => {
-        document.getElementById('modal-subtext').innerText = `${randomPraise} Jawapan anda tepat sekali!`;
-        document.getElementById('reward-modal').classList.remove('hidden');
-      }, 1000);
     }
 
     function closeRewardModal() {
       document.getElementById('reward-modal').classList.add('hidden');
-      showTab('games');
+      showTab('subjects');
     }
 
     function repeatInstruction() {
-      if (currentQuestionData) {
-        speakBiko(currentQuestionData.instruction);
-      }
-    }
-
-    function selectSubject(subjKey) {
-      state.activeSubject = subjKey;
-      startGame('game_letter'); // Launch relevant subject quiz
+      if (currentQuestion) speakBiko(currentQuestion.instruction);
     }
 
     function startDailyChallenge() {
-      startGame('game_count');
+      startSubjectTopic('math');
     }
 
-    // ==========================================
-    // 6. PARENTS SECURITY CONTROL (GATEWAY)
-    // ==========================================
     function openParentsAuth() {
-      const num1 = Math.floor(Math.random() * 5) + 1;
+      const num1 = Math.floor(Math.random() * 4) + 1;
       const num2 = Math.floor(Math.random() * 4) + 1;
-      const ans = prompt(`KAWALAN IBU BAPA:\nSila selesaikan soalan matematik ini untuk masuk:\n${num1} + ${num2} = ?`);
-      
+      const ans = prompt(`KAWALAN IBU BAPA:\n${num1} + ${num2} = ?`);
       if (parseInt(ans) === (num1 + num2)) {
         showTab('parents');
-      } else if (ans !== null) {
-        alert("Jawapan tidak tepat. Akses khusus untuk ibu bapa.");
       }
     }
 
-    // ==========================================
-    // 7. CANVAS PAINTING & CREATIVITY ENGINE
-    // ==========================================
-    let canvas, ctx;
-    let isDrawing = false;
-    let strokeColor = '#EF4444';
-
+    // CANVAS DRAWING ENGINE
+    let canvas, ctx, isDrawing = false, strokeColor = '#EF4444';
     function initCanvas() {
       canvas = document.getElementById('paintCanvas');
       if (!canvas) return;
       ctx = canvas.getContext('2d');
-
-      // Adjust resolution
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
-
       ctx.lineWidth = 6;
       ctx.lineCap = 'round';
       ctx.strokeStyle = strokeColor;
 
-      // Mouse Events
       canvas.onmousedown = (e) => startDraw(e.offsetX, e.offsetY);
       canvas.onmousemove = (e) => draw(e.offsetX, e.offsetY);
       canvas.onmouseup = () => stopDraw();
 
-      // Touch Events for Mobile / Tablets
       canvas.ontouchstart = (e) => {
         const rect = canvas.getBoundingClientRect();
-        const touch = e.touches[0];
-        startDraw(touch.clientX - rect.left, touch.clientY - rect.top);
+        startDraw(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
       };
       canvas.ontouchmove = (e) => {
         const rect = canvas.getBoundingClientRect();
-        const touch = e.touches[0];
-        draw(touch.clientX - rect.left, touch.clientY - rect.top);
+        draw(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
       };
       canvas.ontouchend = () => stopDraw();
     }
+    function setPaintColor(c) { strokeColor = c; if(ctx) ctx.strokeStyle = c; }
+    function startDraw(x, y) { isDrawing = true; ctx.beginPath(); ctx.moveTo(x, y); }
+    function draw(x, y) { if (!isDrawing) return; ctx.lineTo(x, y); ctx.stroke(); }
+    function stopDraw() { isDrawing = false; }
+    function clearCanvas() { if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-    function setPaintColor(color) {
-      strokeColor = color;
-      if (ctx) ctx.strokeStyle = strokeColor;
-    }
-
-    function startDraw(x, y) {
-      isDrawing = true;
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-    }
-
-    function draw(x, y) {
-      if (!isDrawing) return;
-      ctx.lineTo(x, y);
-      ctx.stroke();
-    }
-
-    function stopDraw() {
-      isDrawing = false;
-    }
-
-    function clearCanvas() {
-      if (ctx && canvas) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    }
-
-    // ==========================================
-    // 8. APP INITIALIZATION ON LOAD
-    // ==========================================
-    window.onload = () => {
-      loadSavedState();
-      
-      // Welcome speech upon initial interaction
-      document.body.addEventListener('click', () => {
-        if (!window.hasSpokenWelcome) {
-          speakBiko("Selamat datang ke Kids Pintar! Mari belajar bersama Biko!");
-          window.hasSpokenWelcome = true;
-        }
-      }, { once: true });
-    };
+    window.onload = () => { loadSavedState(); };
   </script>
 </body>
 </html>
